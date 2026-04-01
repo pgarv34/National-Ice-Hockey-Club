@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Manchester Hockey | National Ice Hockey Club</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0f2a44',
+            accent: '#d7262b'
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="icon" href="./logo.png">
+
+  <style>
+    @keyframes marquee {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    .animate-marquee {
+      animation: marquee 15s linear infinite;
+    }
+  </style>
+
+</head>
+
+<body class="bg-black text-white font-sans">
+
+<!-- 🔴 NEWS TICKER -->
+<div class="bg-accent text-white text-sm py-2 overflow-hidden whitespace-nowrap">
+  <div class="animate-marquee inline-block">
+    🏒 Registration Open Now • Fixtures Live • Join Manchester Hockey Today • New Season Starting Soon •
+  </div>
+</div>
+
+<!-- NAV -->
+<header class="sticky top-0 z-50 bg-black/80 backdrop-blur border-b border-gray-800">
+  <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
+    
+    <!-- LOGO -->
+    <img src="./logo.png" alt="NIHC Logo" class="h-12 md:h-14">
+
+    <nav class="space-x-6 text-sm">
+      <a href="#about" class="hover:text-accent">About</a>
+      <a href="#fixtures" class="hover:text-accent">Fixtures</a>
+      <a href="#gallery" class="hover:text-accent">Gallery</a>
+      <a href="#join" class="hover:text-accent">Join</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="relative min-h-screen flex items-center justify-center text-center py-32 overflow-hidden">
+  <img src="./hero.jpg" class="absolute w-full h-full object-cover opacity-30">
+
+  <div class="relative z-10 px-4">
+    
+    <!-- HERO LOGO -->
+    <img src="./logo.png" alt="NIHC Logo" class="mx-auto mb-6 w-24 md:w-32">
+
+    <h1 class="text-5xl md:text-7xl font-extrabold mb-6">Manchester Hockey</h1>
+    <p class="text-gray-300 text-lg mb-8">National Ice Hockey Club</p>
+
+    <div class="flex justify-center gap-4">
+      <a href="#join" class="bg-accent px-8 py-4 rounded-xl font-semibold hover:scale-105 transition">Join Now</a>
+      <a href="#fixtures" class="border px-8 py-4 rounded-xl hover:bg-white hover:text-black transition">View Fixtures</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="max-w-5xl mx-auto py-24 text-center px-4">
+  <h2 class="text-4xl font-bold mb-6">About</h2>
+  <p class="text-gray-400 text-lg">
+    Manchester Hockey is a competitive and social National Ice Hockey Club bringing players together across all skill levels.
+  </p>
+</section>
+
+<!-- FEATURES -->
+<section class="bg-gray-900 py-20">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-4 text-center">
+
+    <div class="bg-black p-8 rounded-2xl">
+      <h3 class="text-xl font-bold mb-2">🏒 All Levels</h3>
+      <p class="text-gray-400">Beginner to experienced players welcome</p>
+    </div>
+
+    <div class="bg-black p-8 rounded-2xl">
+      <h3 class="text-xl font-bold mb-2">📅 Weekly Fixtures</h3>
+      <p class="text-gray-400">Organised games and standings</p>
+    </div>
+
+    <div class="bg-black p-8 rounded-2xl">
+      <h3 class="text-xl font-bold mb-2">🍻 Social Atmosphere</h3>
+      <p class="text-gray-400">Competitive but relaxed environment</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- FIXTURES -->
+<section id="fixtures" class="max-w-7xl mx-auto py-20 px-4">
+  <h2 class="text-3xl font-bold mb-6">Fixtures & Schedule</h2>
+  <div class="bg-gray-900 p-4 rounded-2xl border border-gray-800">
+    <iframe 
+      src="https://gamesheetstats.com/seasons/11696/schedule?configuration[primary-colour]=FFFFFF&configuration[secondary-colour]=1A2841"
+      class="w-full h-[800px] md:h-[1000px] rounded-xl">
+    </iframe>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="bg-gray-900 py-20">
+  <h2 class="text-3xl text-center font-bold mb-10">Match Gallery</h2>
+  <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 px-4">
+
+    <img src="./img1.jpg" class="rounded-xl hover:scale-105 transition">
+    <img src="./img2.jpg" class="rounded-xl hover:scale-105 transition">
+    <img src="./img3.jpg" class="rounded-xl hover:scale-105 transition">
+    <img src="./img4.jpg" class="rounded-xl hover:scale-105 transition">
+
+  </div>
+</section>
+
+<!-- JOIN -->
+<section id="join" class="text-center py-24 px-4">
+  <h2 class="text-4xl font-bold mb-6">Join the Club</h2>
+
+  <form action="https://formspree.io/f/your-id" method="POST" class="max-w-xl mx-auto flex flex-col gap-4">
+    <input type="text" name="name" placeholder="Your Name" required class="p-4 rounded-xl bg-gray-800 border border-gray-700">
+    <input type="email" name="email" placeholder="Email" required class="p-4 rounded-xl bg-gray-800 border border-gray-700">
+    <button class="bg-accent py-4 rounded-xl font-semibold hover:opacity-90">Register</button>
+  </form>
+</section>
+
+<!-- FLOATING CTA -->
+<a href="#join" class="fixed bottom-6 right-6 bg-accent px-6 py-3 rounded-full shadow-lg hover:scale-105 transition">
+  Join Now
+</a>
+
+<!-- FOOTER -->
+<footer class="bg-black py-8 text-center text-gray-500 border-t border-gray-800">
+  <p>© 2026 Manchester Hockey</p>
+</footer>
+
+</body>
+</html>
