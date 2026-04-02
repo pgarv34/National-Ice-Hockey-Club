@@ -1,0 +1,45 @@
+name: Update Gamesheet Data
+
+on:
+  schedule:
+    - cron: "0 */3 * * *"   # every 3 hours
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Fetch Gamesheet page
+        run: |
+          curl -s "https://gamesheetstats.com/seasons/11696/schedule" > page.html
+
+      - name: Create safe fallback data
+        run: |
+          echo '{
+            "games": [
+              {
+                "home": "Jets",
+                "away": "Storm",
+                "date": "Live from Gamesheet",
+                "homeScore": 0,
+                "awayScore": 0,
+                "status": "upcoming"
+              }
+            ]
+          }' > newdata.json
+
+      - name: Replace data safely
+        run: |
+          mv newdata.json data.json
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "bot"
+          git config --global user.email "bot@github.com"
+          git add data.json
+          git commit -m "Update gamesheet data" || echo "No changes"
+          git push
