@@ -38,11 +38,18 @@
 <body class="bg-black text-white font-sans">
 
 <!-- 🔴 NEWS TICKER -->
-<div class="bg-accent text-white text-sm py-2 overflow-hidden whitespace-nowrap">
-  <div class="animate-marquee inline-block">
-    🏒 Registration Open Now • Fixtures Live • Join NIHC Hockey Today • New Season Starting Soon •
-  </div>
-</div>
+<script>
+fetch('./data.json')
+  .then(res => res.json())
+  .then(data => {
+    const latest = data.games.find(g => g.status === "finished");
+
+    if (latest) {
+      document.getElementById('ticker').innerText =
+        `🏒 ${latest.home} ${latest.homeScore}-${latest.awayScore} ${latest.away} • Next Fixtures Live • Join UK Hockey`;
+    }
+  });
+</script>
 
 <!-- NAV -->
 <header class="sticky top-0 z-50 bg-black/80 backdrop-blur border-b border-gray-800">
@@ -111,15 +118,43 @@
 </section>
 
 <!-- FIXTURES -->
+<!-- FIXTURES -->
 <section id="fixtures" class="max-w-7xl mx-auto py-20 px-4">
-  <h2 class="text-3xl font-bold mb-6">Fixtures & Schedule</h2>
-  <div class="bg-gray-900 p-4 rounded-2xl border border-gray-800">
-    <iframe 
-      src="https://gamesheetstats.com/seasons/11696/schedule?configuration[primary-colour]=FFFFFF&configuration[secondary-colour]=1A2841"
-      class="w-full h-[800px] md:h-[1000px] rounded-xl">
-    </iframe>
-  </div>
+  <h2 class="text-3xl font-bold mb-6">Fixtures & Results</h2>
+
+  <div id="fixtures-container" class="grid gap-4"></div>
 </section>
+
+<script>
+fetch('./data.json')
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById('fixtures-container');
+    container.innerHTML = "";
+
+    data.games.forEach(game => {
+      const div = document.createElement('div');
+      div.className = "bg-gray-900 p-6 rounded-xl border border-gray-800 flex justify-between";
+
+      let rightSide = "";
+
+      if (game.status === "finished") {
+        rightSide = `${game.homeScore} - ${game.awayScore}`;
+      } else {
+        rightSide = game.date;
+      }
+
+      div.innerHTML = `
+        <div>
+          <strong>${game.home}</strong> vs <strong>${game.away}</strong>
+        </div>
+        <div class="text-xl font-bold">${rightSide}</div>
+      `;
+
+      container.appendChild(div);
+    });
+  });
+</script>
 
 <!-- GALLERY -->
 <section id="gallery" class="bg-gray-900 py-20">
