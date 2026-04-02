@@ -135,15 +135,42 @@
 </section>
 
 <!-- JOIN -->
+<!-- JOIN -->
 <section id="join" class="text-center py-24 px-4">
-  <h2 class="text-4xl font-bold mb-6">Join the Club</h2>
+  <h2 class="text-4xl font-bold mb-6">Join UK Hockey</h2>
 
-  <form action="https://formspree.io/f/your-id" method="POST" class="max-w-xl mx-auto flex flex-col gap-4">
-    <input type="text" name="name" placeholder="Your Name" required class="p-4 rounded-xl bg-gray-800 border border-gray-700">
-    <input type="email" name="email" placeholder="Email" required class="p-4 rounded-xl bg-gray-800 border border-gray-700">
-    <button class="bg-accent py-4 rounded-xl font-semibold hover:opacity-90">Register</button>
+  <p class="text-gray-400 mb-8">
+    Register your interest and we’ll get you on the ice.
+  </p>
+
+  <form onsubmit="sendEmail(); return false;" class="max-w-xl mx-auto flex flex-col gap-4">
+
+    <input id="name" type="text" placeholder="Your Name" required 
+      class="p-4 rounded-xl bg-gray-800 border border-gray-700">
+
+    <input id="email" type="email" placeholder="Email" required 
+      class="p-4 rounded-xl bg-gray-800 border border-gray-700">
+
+    <textarea id="experience" placeholder="Experience (optional)" 
+      class="p-4 rounded-xl bg-gray-800 border border-gray-700"></textarea>
+
+    <button class="bg-accent py-4 rounded-xl font-semibold hover:opacity-90">
+      Register
+    </button>
+
   </form>
 </section>
+
+<script>
+function sendEmail() {
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const exp = document.getElementById('experience').value;
+
+  window.location.href =
+    `mailto:NIHCleague@gmail.com?subject=Join UK Hockey&body=Name: ${name}%0D%0AEmail: ${email}%0D%0AExperience: ${exp}`;
+}
+</script>
 
 <!-- FLOATING CTA -->
 <a href="#join" class="fixed bottom-6 right-6 bg-accent px-6 py-3 rounded-full shadow-lg hover:scale-105 transition">
