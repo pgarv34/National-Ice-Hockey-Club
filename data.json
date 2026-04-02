@@ -1,0 +1,20 @@
+{
+  "games": [
+    {
+      "home": "Jets",
+      "away": "Storm",
+      "date": "Sun 7PM",
+      "homeScore": 5,
+      "awayScore": 2,
+      "status": "finished"
+    },
+    {
+      "home": "Blades",
+      "away": "Knights",
+      "date": "Wed 8PM",
+      "homeScore": 0,
+      "awayScore": 0,
+      "status": "upcoming"
+    }
+  ]
+}
