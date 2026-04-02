@@ -2,6 +2,7 @@ name: Update Gamesheet Data
 
 on:
   workflow_dispatch:
+  push:
 
 jobs:
   update:
