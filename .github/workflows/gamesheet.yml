@@ -1,6 +1,8 @@
 name: Update Gamesheet Data
 
 on:
+  schedule:
+    - cron: "0 */3 * * *"
   workflow_dispatch:
 
 jobs:
@@ -15,19 +17,66 @@ jobs:
         run: |
           python -m pip install requests beautifulsoup4
 
-      - name: Generate data.json (SAFE TEST)
+      - name: Fetch and parse Gamesheet
         run: |
-          echo "import json" > script.py
-          echo "games = [{" >> script.py
-          echo "  \"home\": \"Jets\"," >> script.py
-          echo "  \"away\": \"Storm\"," >> script.py
-          echo "  \"homeScore\": 5," >> script.py
-          echo "  \"awayScore\": 2," >> script.py
-          echo "  \"status\": \"finished\"" >> script.py
-          echo "}]" >> script.py
-          echo "with open('data.json','w') as f: json.dump({'games':games}, f)" >> script.py
+          python <<EOF
+import requests
+from bs4 import BeautifulSoup
+import json
 
-          python script.py
+url = "https://gamesheetstats.com/seasons/11696/schedule"
+res = requests.get(url)
+soup = BeautifulSoup(res.text, "html.parser")
+
+games = []
+
+rows = soup.find_all("tr")
+
+for row in rows:
+    cols = row.find_all("td")
+
+    if len(cols) >= 3:
+        try:
+            teams_text = cols[1].get_text(strip=True)
+
+            if "vs" not in teams_text:
+                continue
+
+            home, away = [t.strip() for t in teams_text.split("vs")]
+
+            score_text = cols[2].get_text(strip=True)
+
+            if "-" in score_text:
+                homeScore, awayScore = score_text.split("-")
+                status = "finished"
+            else:
+                homeScore, awayScore = 0, 0
+                status = "upcoming"
+
+            games.append({
+                "home": home,
+                "away": away,
+                "homeScore": int(homeScore),
+                "awayScore": int(awayScore),
+                "status": status
+            })
+        except:
+            continue
+
+# SAFE fallback
+if not games:
+    games = [{
+        "home": "UK Hockey",
+        "away": "Data Pending",
+        "homeScore": 0,
+        "awayScore": 0,
+        "status": "upcoming"
+    }]
+
+with open("data.json", "w") as f:
+    json.dump({"games": games[:10]}, f, indent=2)
+
+EOF
 
       - name: Commit and push
         run: |
@@ -38,6 +87,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No changes"
           else
-            git commit -m "Auto update data"
+            git commit -m "Update real gamesheet data"
             git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           fi
