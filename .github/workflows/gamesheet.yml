@@ -1,6 +1,8 @@
 name: Update Gamesheet Data
 
 on:
+  schedule:
+    - cron: "0 */3 * * *"   # every 3 hours
   workflow_dispatch:
 
 jobs:
@@ -11,27 +13,74 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Create data file
+      - name: Install Python deps
+        run: pip install beautifulsoup4
+
+      - name: Fetch & parse Gamesheet
         run: |
-          echo '{
-            "games": [
-              {
-                "home": "Jets",
-                "away": "Storm",
-                "date": "Auto Updated",
-                "homeScore": 5,
-                "awayScore": 2,
-                "status": "finished"
-              }
-            ]
-          }' > data.json
+          python <<EOF
+import requests
+from bs4 import BeautifulSoup
+import json
+
+url = "https://gamesheetstats.com/seasons/11696/schedule"
+res = requests.get(url)
+soup = BeautifulSoup(res.text, "html.parser")
+
+games = []
+
+rows = soup.find_all("tr")
+
+for row in rows:
+    cols = row.find_all("td")
+    if len(cols) >= 4:
+        try:
+            teams = cols[1].text.strip().split("vs")
+            if len(teams) != 2:
+                continue
+
+            home = teams[0].strip()
+            away = teams[1].strip()
+
+            score_text = cols[2].text.strip()
+
+            if "-" in score_text:
+                homeScore, awayScore = score_text.split("-")
+                status = "finished"
+            else:
+                homeScore, awayScore = 0, 0
+                status = "upcoming"
+
+            games.append({
+                "home": home,
+                "away": away,
+                "homeScore": int(homeScore),
+                "awayScore": int(awayScore),
+                "status": status
+            })
+        except:
+            continue
+
+# fallback if parsing fails
+if not games:
+    games = [{
+        "home": "UK Hockey",
+        "away": "Data Pending",
+        "homeScore": 0,
+        "awayScore": 0,
+        "status": "upcoming"
+    }]
+
+with open("data.json", "w") as f:
+    json.dump({"games": games[:10]}, f, indent=2)
+EOF
 
       - name: Commit changes
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add data.json
-          git commit -m "Auto update data" || echo "No changes"
+          git commit -m "Update gamesheet data" || echo "No changes"
 
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
