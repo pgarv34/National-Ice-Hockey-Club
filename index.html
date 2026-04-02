@@ -4,24 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>National Ice Hockey Club | NIHC</title>
+  <title>National Ice Hockey Club | UK Hockey</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#0f2a44',
-            accent: '#d7262b'
-          }
-        }
-      }
-    }
-  </script>
-
-  <link rel="icon" href="./logo.png">
 
   <style>
     @keyframes marquee {
@@ -32,100 +17,74 @@
       animation: marquee 15s linear infinite;
     }
   </style>
-
 </head>
 
 <body class="bg-black text-white font-sans">
 
-<!-- 🔴 NEWS TICKER -->
-<script>
-fetch('./data.json')
-  .then(res => res.json())
-  .then(data => {
-    const latest = data.games.find(g => g.status === "finished");
+<!-- 🇬🇧 STRIPE -->
+<div class="h-1 bg-gradient-to-r from-red-600 via-white to-blue-700"></div>
 
-    if (latest) {
-      document.getElementById('ticker').innerText =
-        `🏒 ${latest.home} ${latest.homeScore}-${latest.awayScore} ${latest.away} • Next Fixtures Live • Join UK Hockey`;
-    }
-  });
-</script>
+<!-- 🔴 TICKER -->
+<div class="bg-red-600 text-white text-sm py-2 overflow-hidden whitespace-nowrap">
+  <div id="ticker" class="animate-marquee inline-block">
+    Loading...
+  </div>
+</div>
 
 <!-- NAV -->
-<header class="sticky top-0 z-50 bg-black/80 backdrop-blur border-b border-gray-800">
-  <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
-    
-    <!-- LOGO -->
-    <img src="./logo.png" alt="NIHC Logo" class="h-12 md:h-14">
-
-    <nav class="space-x-6 text-sm">
-      <a href="#about" class="hover:text-accent">About</a>
-      <a href="#fixtures" class="hover:text-accent">Fixtures</a>
-      <a href="#gallery" class="hover:text-accent">Gallery</a>
-      <a href="#join" class="hover:text-accent">Join</a>
-    </nav>
-  </div>
+<header class="bg-black p-4 flex justify-between items-center">
+  <img src="./logo.png" class="h-12">
+  <nav class="space-x-6">
+    <a href="#fixtures">Fixtures</a>
+    <a href="#join">Join</a>
+  </nav>
 </header>
 
 <!-- HERO -->
-<section class="relative min-h-screen flex items-center justify-center text-center py-32 overflow-hidden">
+<section class="relative min-h-screen flex items-center justify-center text-center">
   <img src="./hero.jpg" class="absolute w-full h-full object-cover opacity-30">
 
-  <div class="relative z-10 px-4">
-    
-    <!-- HERO LOGO -->
-    <img src="./logo.png" alt="NIHC Logo" class="mx-auto mb-6 w-24 md:w-32">
+  <div class="relative z-10">
+    <img src="./logo.png" class="mx-auto mb-6 w-24">
 
-    <h1 class="text-5xl md:text-7xl font-extrabold mb-6">National Ice Hockey Club</h1>
-    <p class="text-gray-300 text-lg mb-8">NIHC</p>
+    <h1 class="text-5xl font-bold mb-4">
+      National Ice Hockey Club
+    </h1>
 
-    <div class="flex justify-center gap-4">
-      <a href="#join" class="bg-accent px-8 py-4 rounded-xl font-semibold hover:scale-105 transition">Join Now</a>
-      <a href="#fixtures" class="border px-8 py-4 rounded-xl hover:bg-white hover:text-black transition">View Fixtures</a>
-    </div>
+    <p class="text-gray-300 mb-6">
+      UK Hockey League
+    </p>
 
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about" class="max-w-5xl mx-auto py-24 text-center px-4">
-  <h2 class="text-4xl font-bold mb-6">About</h2>
-  <p class="text-gray-400 text-lg">
-    Manchester Hockey is a competitive and social National Ice Hockey Club bringing players together across all skill levels.
-  </p>
-</section>
-
-<!-- FEATURES -->
-<section class="bg-gray-900 py-20">
-  <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-4 text-center">
-
-    <div class="bg-black p-8 rounded-2xl">
-      <h3 class="text-xl font-bold mb-2">🏒 All Levels</h3>
-      <p class="text-gray-400">Beginner to experienced players welcome</p>
-    </div>
-
-    <div class="bg-black p-8 rounded-2xl">
-      <h3 class="text-xl font-bold mb-2">📅 Weekly Fixtures</h3>
-      <p class="text-gray-400">Organised games and standings</p>
-    </div>
-
-    <div class="bg-black p-8 rounded-2xl">
-      <h3 class="text-xl font-bold mb-2">🍻 Social Atmosphere</h3>
-      <p class="text-gray-400">Competitive but relaxed environment</p>
-    </div>
-
+    <a href="#join" class="bg-red-600 px-6 py-3 rounded-lg">
+      Join Now
+    </a>
   </div>
 </section>
 
 <!-- FIXTURES -->
-<!-- FIXTURES -->
-<section id="fixtures" class="max-w-7xl mx-auto py-20 px-4">
+<section id="fixtures" class="max-w-5xl mx-auto py-20 px-4">
   <h2 class="text-3xl font-bold mb-6">Fixtures & Results</h2>
-
-  <div id="fixtures-container" class="grid gap-4"></div>
+  <div id="fixtures-container" class="space-y-4"></div>
 </section>
 
+<!-- JOIN -->
+<section id="join" class="text-center py-20 px-4">
+  <h2 class="text-3xl font-bold mb-6">Join the League</h2>
+
+  <form onsubmit="sendEmail(); return false;" class="max-w-md mx-auto space-y-4">
+    <input id="name" type="text" placeholder="Your Name" required class="w-full p-3 bg-gray-800 rounded">
+    <input id="email" type="email" placeholder="Email" required class="w-full p-3 bg-gray-800 rounded">
+    <textarea id="experience" placeholder="Experience" class="w-full p-3 bg-gray-800 rounded"></textarea>
+
+    <button class="bg-red-600 px-6 py-3 rounded w-full">
+      Register
+    </button>
+  </form>
+</section>
+
+<!-- SCRIPTS -->
 <script>
+// 📊 LOAD FIXTURES
 fetch('./data.json')
   .then(res => res.json())
   .then(data => {
@@ -134,69 +93,47 @@ fetch('./data.json')
 
     data.games.forEach(game => {
       const div = document.createElement('div');
-      div.className = "bg-gray-900 p-6 rounded-xl border border-gray-800 flex justify-between";
+      div.className = "bg-gray-900 p-4 rounded flex justify-between";
 
-      let rightSide = "";
-
-      if (game.status === "finished") {
-        rightSide = `${game.homeScore} - ${game.awayScore}`;
-      } else {
-        rightSide = game.date;
-      }
+      let right = game.status === "finished"
+        ? `${game.homeScore}-${game.awayScore}`
+        : game.date;
 
       div.innerHTML = `
-        <div>
-          <strong>${game.home}</strong> vs <strong>${game.away}</strong>
-        </div>
-        <div class="text-xl font-bold">${rightSide}</div>
+        <div>${game.home} vs ${game.away}</div>
+        <div>${right}</div>
       `;
 
       container.appendChild(div);
     });
   });
-</script>
 
-<!-- GALLERY -->
-<section id="gallery" class="bg-gray-900 py-20">
-  <h2 class="text-3xl text-center font-bold mb-10">Match Gallery</h2>
-  <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 px-4">
+// 🔴 TICKER (SAFE)
+fetch('./data.json')
+  .then(res => res.json())
+  .then(data => {
+    const ticker = document.getElementById('ticker');
+    if (!ticker) return;
 
-    <img src="./img1.jpg" class="rounded-xl hover:scale-105 transition">
-    <img src="./img2.jpg" class="rounded-xl hover:scale-105 transition">
-    <img src="./img3.jpg" class="rounded-xl hover:scale-105 transition">
-    <img src="./img4.jpg" class="rounded-xl hover:scale-105 transition">
+    const latest = data.games?.find(g => g.status === "finished");
 
-  </div>
-</section>
+    if (latest) {
+      ticker.innerText =
+        `🏒 ${latest.home} ${latest.homeScore}-${latest.awayScore} ${latest.away} • Next Fixtures Live • Join UK Hockey`;
+    } else {
+      ticker.innerText =
+        "🏒 Fixtures Live • Join UK Hockey Today •";
+    }
+  })
+  .catch(() => {
+    const ticker = document.getElementById('ticker');
+    if (ticker) {
+      ticker.innerText =
+        "🏒 UK Hockey League • Fixtures Coming Soon •";
+    }
+  });
 
-<!-- JOIN -->
-<!-- JOIN -->
-<section id="join" class="text-center py-24 px-4">
-  <h2 class="text-4xl font-bold mb-6">Join UK Hockey</h2>
-
-  <p class="text-gray-400 mb-8">
-    Register your interest and we’ll get you on the ice.
-  </p>
-
-  <form onsubmit="sendEmail(); return false;" class="max-w-xl mx-auto flex flex-col gap-4">
-
-    <input id="name" type="text" placeholder="Your Name" required 
-      class="p-4 rounded-xl bg-gray-800 border border-gray-700">
-
-    <input id="email" type="email" placeholder="Email" required 
-      class="p-4 rounded-xl bg-gray-800 border border-gray-700">
-
-    <textarea id="experience" placeholder="Experience (optional)" 
-      class="p-4 rounded-xl bg-gray-800 border border-gray-700"></textarea>
-
-    <button class="bg-accent py-4 rounded-xl font-semibold hover:opacity-90">
-      Register
-    </button>
-
-  </form>
-</section>
-
-<script>
+// 📧 EMAIL FORM
 function sendEmail() {
   const name = document.getElementById('name').value;
   const email = document.getElementById('email').value;
@@ -206,16 +143,6 @@ function sendEmail() {
     `mailto:NIHCleague@gmail.com?subject=Join UK Hockey&body=Name: ${name}%0D%0AEmail: ${email}%0D%0AExperience: ${exp}`;
 }
 </script>
-
-<!-- FLOATING CTA -->
-<a href="#join" class="fixed bottom-6 right-6 bg-accent px-6 py-3 rounded-full shadow-lg hover:scale-105 transition">
-  Join Now
-</a>
-
-<!-- FOOTER -->
-<footer class="bg-black py-8 text-center text-gray-500 border-t border-gray-800">
-  <p>© 2026 NIHC</p>
-</footer>
 
 </body>
 </html>
