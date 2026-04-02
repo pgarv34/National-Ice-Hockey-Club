@@ -27,7 +27,7 @@
 <!-- 🔴 TICKER -->
 <div class="bg-red-600 text-white text-sm py-2 overflow-hidden whitespace-nowrap">
   <div id="ticker" class="animate-marquee inline-block">
-    Loading...
+    🏒 UK Hockey Registration Open • Fixtures Live • Join Now •
   </div>
 </div>
 
@@ -61,10 +61,17 @@
   </div>
 </section>
 
-<!-- FIXTURES -->
-<section id="fixtures" class="max-w-5xl mx-auto py-20 px-4">
-  <h2 class="text-3xl font-bold mb-6">Fixtures & Results</h2>
-  <div id="fixtures-container" class="space-y-4"></div>
+<!-- FIXTURES (GAMESHEET IFRAME) -->
+<section id="fixtures" class="max-w-7xl mx-auto py-20 px-4">
+  <h2 class="text-3xl font-bold mb-6">Fixtures & Schedule</h2>
+
+  <div class="bg-gray-900 p-4 rounded-xl">
+    <iframe 
+      src="https://gamesheetstats.com/seasons/11696/schedule?configuration[primary-colour]=FFFFFF&configuration[secondary-colour]=1A2841"
+      class="w-full h-[900px] rounded-xl"
+      frameborder="0">
+    </iframe>
+  </div>
 </section>
 
 <!-- JOIN -->
@@ -82,58 +89,8 @@
   </form>
 </section>
 
-<!-- SCRIPTS -->
+<!-- SCRIPT -->
 <script>
-// 📊 LOAD FIXTURES
-fetch('./data.json')
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById('fixtures-container');
-    container.innerHTML = "";
-
-    data.games.forEach(game => {
-      const div = document.createElement('div');
-      div.className = "bg-gray-900 p-4 rounded flex justify-between";
-
-      let right = game.status === "finished"
-        ? `${game.homeScore}-${game.awayScore}`
-        : game.date;
-
-      div.innerHTML = `
-        <div>${game.home} vs ${game.away}</div>
-        <div>${right}</div>
-      `;
-
-      container.appendChild(div);
-    });
-  });
-
-// 🔴 TICKER (SAFE)
-fetch('./data.json')
-  .then(res => res.json())
-  .then(data => {
-    const ticker = document.getElementById('ticker');
-    if (!ticker) return;
-
-    const latest = data.games?.find(g => g.status === "finished");
-
-    if (latest) {
-      ticker.innerText =
-        `🏒 ${latest.home} ${latest.homeScore}-${latest.awayScore} ${latest.away} • Next Fixtures Live • Join UK Hockey`;
-    } else {
-      ticker.innerText =
-        "🏒 Fixtures Live • Join UK Hockey Today •";
-    }
-  })
-  .catch(() => {
-    const ticker = document.getElementById('ticker');
-    if (ticker) {
-      ticker.innerText =
-        "🏒 UK Hockey League • Fixtures Coming Soon •";
-    }
-  });
-
-// 📧 EMAIL FORM
 function sendEmail() {
   const name = document.getElementById('name').value;
   const email = document.getElementById('email').value;
