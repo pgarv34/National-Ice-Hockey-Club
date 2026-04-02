@@ -16,9 +16,9 @@ jobs:
         run: |
           python -m pip install requests beautifulsoup4
 
-      - name: Fetch and parse Gamesheet (SAFE)
+      - name: Create parser script
         run: |
-          python <<EOF
+          cat << 'EOF' > script.py
 import requests
 from bs4 import BeautifulSoup
 import json
@@ -27,15 +27,10 @@ games = []
 
 try:
     url = "https://gamesheetstats.com/seasons/11696/schedule"
-
-    headers = {
-        "User-Agent": "Mozilla/5.0"
-    }
-
+    headers = {"User-Agent": "Mozilla/5.0"}
     res = requests.get(url, headers=headers, timeout=10)
 
     soup = BeautifulSoup(res.text, "html.parser")
-
     rows = soup.find_all("tr")
 
     for row in rows:
@@ -49,7 +44,6 @@ try:
                     continue
 
                 home, away = [t.strip() for t in teams_text.split("vs")]
-
                 score_text = cols[2].get_text(strip=True)
 
                 if "-" in score_text:
@@ -73,9 +67,8 @@ try:
                 continue
 
 except Exception as e:
-    print("ERROR:", e)
+    print("Error:", e)
 
-# 🔒 ALWAYS ensure data exists
 if not games:
     games = [{
         "home": "UK Hockey",
@@ -87,8 +80,10 @@ if not games:
 
 with open("data.json", "w") as f:
     json.dump({"games": games[:10]}, f, indent=2)
-
 EOF
+
+      - name: Run parser
+        run: python script.py
 
       - name: Commit and push
         run: |
