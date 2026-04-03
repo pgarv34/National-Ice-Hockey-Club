@@ -14,12 +14,23 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
+    /* TICKER */
     @keyframes marquee {
       0% { transform: translateX(100%); }
       100% { transform: translateX(-100%); }
     }
     .animate-marquee {
       animation: marquee 15s linear infinite;
+    }
+
+    /* HERO ANIMATION */
+    .hero-bg {
+      animation: heroZoom 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroZoom {
+      from { transform: scale(1); }
+      to { transform: scale(1.08); }
     }
   </style>
 </head>
@@ -46,12 +57,18 @@
   </nav>
 </header>
 
-<!-- HERO -->
-<section class="relative min-h-screen flex items-center justify-center text-center">
-  <img src="./hero.jpg" class="absolute w-full h-full object-cover opacity-30">
+<!-- 🔥 HERO (UPDATED) -->
+<section class="relative min-h-screen flex items-center justify-center text-center overflow-hidden">
 
+  <!-- BACKGROUND IMAGE -->
+  <img src="./NIHCHEro.jpg" class="hero-bg absolute w-full h-full object-cover">
+
+  <!-- OVERLAY -->
+  <div class="absolute w-full h-full bg-gradient-to-b from-black/40 to-black"></div>
+
+  <!-- CONTENT -->
   <div class="relative z-10">
-    <img src="./logo.png" class="mx-auto mb-6 w-24">
+    <img src="./logo.png" class="mx-auto mb-6 w-32">
 
     <h1 class="text-5xl font-bold mb-4">
       National Ice Hockey Club
@@ -61,10 +78,11 @@
       UK Hockey League
     </p>
 
-    <a href="#join" class="bg-red-600 px-6 py-3 rounded-lg">
+    <a href="#join" class="bg-red-600 px-6 py-3 rounded-lg hover:bg-red-700 transition">
       Join Now
     </a>
   </div>
+
 </section>
 
 <!-- FIXTURES -->
@@ -89,7 +107,6 @@
 
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
 
-    <!-- 2025 Tier 1 – Telford Spartans -->
     <div class="group relative overflow-hidden rounded-xl">
       <img src="./telford-team.jpg" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500">
       <img src="./spartans.png" class="absolute top-4 left-4 w-14 h-14 bg-white p-1 rounded-full shadow-lg">
@@ -99,7 +116,6 @@
       </div>
     </div>
 
-    <!-- 2025 Tier 2 – Peterborough Warriors -->
     <div class="group relative overflow-hidden rounded-xl">
       <img src="./warriors-team.jpg" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500">
       <img src="./warriors.png" class="absolute top-4 left-4 w-14 h-14 bg-white p-1 rounded-full shadow-lg">
@@ -109,7 +125,6 @@
       </div>
     </div>
 
-    <!-- 2025 Tier 3 – Altrincham Jets -->
     <div class="group relative overflow-hidden rounded-xl">
       <img src="./jets-team.jpg" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500">
       <img src="./jets.png" class="absolute top-4 left-4 w-14 h-14 bg-white p-1 rounded-full shadow-lg">
@@ -119,7 +134,6 @@
       </div>
     </div>
 
-    <!-- 2024 Tier 1 – Altrincham Jets -->
     <div class="group relative overflow-hidden rounded-xl">
       <img src="./jets-2024.jpg" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500">
       <img src="./jets.png" class="absolute top-4 left-4 w-14 h-14 bg-white p-1 rounded-full shadow-lg">
@@ -129,7 +143,6 @@
       </div>
     </div>
 
-    <!-- 2024 Tier 2 – Telford Spartans -->
     <div class="group relative overflow-hidden rounded-xl">
       <img src="./spartans-2024.jpg" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500">
       <img src="./spartans.png" class="absolute top-4 left-4 w-14 h-14 bg-white p-1 rounded-full shadow-lg">
@@ -142,7 +155,7 @@
   </div>
 </section>
 
-<!-- 🔒 JOIN (SECURE FORM) -->
+<!-- JOIN -->
 <section id="join" class="text-center py-20 px-4">
   <h2 class="text-3xl font-bold mb-6">Join the League</h2>
 
@@ -153,10 +166,8 @@
         data-netlify-recaptcha="true"
         class="max-w-md mx-auto space-y-4">
 
-    <!-- REQUIRED -->
     <input type="hidden" name="form-name" value="join">
 
-    <!-- 🤖 SPAM TRAP -->
     <p style="display:none">
       <label>Don’t fill this out:
         <input name="bot-field">
@@ -167,20 +178,20 @@
     <input name="email" type="email" placeholder="Email" required class="w-full p-3 bg-gray-800 rounded">
     <textarea name="experience" placeholder="Experience" class="w-full p-3 bg-gray-800 rounded"></textarea>
 
-    <!-- CAPTCHA -->
     <div data-netlify-recaptcha="true"></div>
 
-    <button class="bg-red-600 px-6 py-3 rounded w-full">
+    <button class="bg-red-600 px-6 py-3 rounded w-full hover:bg-red-700 transition">
       Register
     </button>
   </form>
 </section>
 
-<!-- 🔒 FOOTER -->
+<!-- FOOTER -->
 <footer class="text-center py-6 text-gray-400 space-x-4">
   <p>© 2026 NIHC League</p>
-  <a href="/privacy.html" class="underline text-gray-400">Privacy Policy</a>
-  <a href="/safeguarding.html" class="underline text-gray-400">Safeguarding Policy</a>
+  <a href="/privacy.html" class="underline">Privacy Policy</a>
+  <a href="/safeguarding.html" class="underline">Safeguarding Policy</a>
 </footer>
+
 </body>
 </html>
