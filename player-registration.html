@@ -1,77 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Player Registration | NIHC</title>
-
-<script src="https://cdn.tailwindcss.com"></script>
-
-</head>
-
-<body class="bg-black text-white font-sans">
-
-<div class="max-w-4xl mx-auto py-16 px-6">
-
-<h1 class="text-3xl font-bold mb-8 text-center">Player Registration</h1>
-
 <form name="player-registration"
       method="POST"
       data-netlify="true"
+      netlify-honeypot="bot-field"
       enctype="multipart/form-data"
       class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-<input type="hidden" name="form-name" value="player-registration">
+  <!-- REQUIRED -->
+  <input type="hidden" name="form-name" value="player-registration">
 
-<!-- NAMES -->
-<input name="first_name" placeholder="First Name" required class="p-3 bg-gray-900 rounded">
-<input name="last_name" placeholder="Last Name" required class="p-3 bg-gray-900 rounded">
+  <!-- SPAM PROTECTION -->
+  <p style="display:none">
+    <label>Don’t fill this out:
+      <input name="bot-field">
+    </label>
+  </p>
 
-<!-- DOB + WEIGHT -->
-<input type="date" name="dob" class="p-3 bg-gray-900 rounded">
-<input name="weight" placeholder="Weight" class="p-3 bg-gray-900 rounded">
+  <!-- NAMES -->
+  <input name="first_name" placeholder="First Name" required class="p-3 bg-gray-900 rounded">
+  <input name="last_name" placeholder="Last Name" required class="p-3 bg-gray-900 rounded">
 
-<!-- HEIGHT + HAND -->
-<input name="height" placeholder="Height" class="p-3 bg-gray-900 rounded">
+  <!-- DOB + WEIGHT -->
+  <input type="date" name="dob" class="p-3 bg-gray-900 rounded">
+  <input name="weight" placeholder="Weight" class="p-3 bg-gray-900 rounded">
 
-<select name="hand" class="p-3 bg-gray-900 rounded">
-  <option>Shot / Catch Hand</option>
-  <option>Left</option>
-  <option>Right</option>
-</select>
+  <!-- HEIGHT + HAND -->
+  <input name="height" placeholder="Height" class="p-3 bg-gray-900 rounded">
 
-<!-- LOCATION -->
-<input name="country" placeholder="Country" class="p-3 bg-gray-900 rounded">
-<input name="state" placeholder="State / Province" class="p-3 bg-gray-900 rounded">
+  <select name="hand" class="p-3 bg-gray-900 rounded">
+    <option value="">Shot / Catch Hand</option>
+    <option>Left</option>
+    <option>Right</option>
+  </select>
 
-<input name="city" placeholder="City / Town" class="p-3 bg-gray-900 rounded">
-<input name="drafted" placeholder="Drafted By" class="p-3 bg-gray-900 rounded">
+  <!-- LOCATION -->
+  <input name="country" placeholder="Country" class="p-3 bg-gray-900 rounded">
+  <input name="state" placeholder="State / Province" class="p-3 bg-gray-900 rounded">
 
-<!-- FULL WIDTH -->
-<input name="committed" placeholder="Committed To" class="p-3 bg-gray-900 rounded col-span-2">
+  <input name="city" placeholder="City / Town" class="p-3 bg-gray-900 rounded">
+  <input name="drafted" placeholder="Drafted By" class="p-3 bg-gray-900 rounded">
 
-<textarea name="bio" placeholder="Player Bio" class="p-3 bg-gray-900 rounded col-span-2"></textarea>
+  <!-- FULL WIDTH -->
+  <input name="committed" placeholder="Committed To" class="p-3 bg-gray-900 rounded col-span-2">
 
-<!-- PHOTO -->
-<div class="col-span-2">
-<label class="block mb-2">Upload Player Photo (ID)</label>
-<input type="file" name="photo" class="p-2 bg-gray-900 rounded w-full">
-</div>
+  <textarea name="bio" placeholder="Player Bio" class="p-3 bg-gray-900 rounded col-span-2"></textarea>
 
-<!-- TERMS -->
-<div class="col-span-2 flex items-center space-x-2 mt-4">
-<input type="checkbox" required>
-<label>I agree to the Privacy Policy and Terms</label>
-</div>
+  <!-- PHOTO -->
+  <div class="col-span-2">
+    <label class="block mb-2">Upload Player Photo (ID)</label>
+    <input type="file" name="photo" class="p-2 bg-gray-900 rounded w-full">
+  </div>
 
-<!-- SUBMIT -->
-<button class="bg-red-600 py-3 rounded font-semibold col-span-2 hover:bg-red-700">
-  Submit Registration
-</button>
+  <!-- TERMS -->
+  <div class="col-span-2 flex items-center space-x-2 mt-4">
+    <input type="checkbox" required>
+    <label>I agree to the Privacy Policy and Terms</label>
+  </div>
+
+  <!-- SUBMIT -->
+  <button type="submit" class="bg-red-600 py-3 rounded font-semibold col-span-2 hover:bg-red-700">
+    Submit Registration
+  </button>
 
 </form>
-
-</div>
-
-</body>
-</html>
