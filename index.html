@@ -58,21 +58,35 @@
 </header>
 
 <!-- 🔥 HERO (CLEANED) -->
-<div class="relative z-10 flex flex-col items-center gap-4">
+<section class="relative min-h-screen flex items-center justify-center text-center overflow-hidden">
 
-  <!-- PLAYER REGISTRATION -->
-  <a href="player-registration.html" 
-     class="bg-red-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-red-700 transition">
-    Player Registration
-  </a>
+  <!-- BACKGROUND IMAGE -->
+  <img src="./NIHCHEro.jpg" class="hero-bg absolute w-full h-full object-cover">
 
-  <!-- LEAGUE JOIN -->
-  <a href="#join" 
-     class="bg-gray-700 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-600 transition">
-    Join League
-  </a>
+  <!-- DARK OVERLAY -->
+  <div class="absolute w-full h-full bg-gradient-to-b from-black/30 via-black/50 to-black"></div>
 
-</div>
+  <!-- SUBTLE GLOW (PREMIUM TOUCH) -->
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_60%)]"></div>
+
+  <!-- CONTENT -->
+  <div class="relative z-10 flex flex-col items-center space-y-6">
+
+    <!-- MAIN CTA -->
+    <a href="player-registration.html" 
+       class="bg-red-600 px-10 py-4 rounded-xl text-lg font-bold tracking-wide shadow-xl hover:bg-red-700 hover:scale-105 transition duration-300">
+      Player Registration
+    </a>
+
+    <!-- SECONDARY CTA -->
+    <a href="#join" 
+       class="bg-gray-700/80 backdrop-blur px-10 py-4 rounded-xl text-lg font-semibold tracking-wide shadow-lg hover:bg-gray-600 hover:scale-105 transition duration-300">
+      Join League
+    </a>
+
+  </div>
+
+</section>
   <!-- BACKGROUND -->
   <img src="./NIHCHEro.jpg" class="hero-bg absolute w-full h-full object-cover">
 
