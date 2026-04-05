@@ -2,20 +2,118 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>NIHC Player Registration</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Player Registration | NIHC</title>
 
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
+<style>
+body {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  background: linear-gradient(180deg, #0a1f44, #000);
+  color: white;
+}
+
+/* HEADER */
+.header {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 2px solid #d32f2f;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: 2px;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+/* CARD */
+.card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 25px;
+  backdrop-filter: blur(10px);
+}
+
+/* GRID */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.full {
+  grid-column: span 2;
+}
+
+/* INPUTS */
+input, select, textarea {
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: #111;
+  color: white;
+  font-size: 14px;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #aaa;
+}
+
+/* BUTTON */
+button {
+  margin-top: 20px;
+  padding: 14px;
+  background: #d32f2f;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+
+button:hover {
+  background: #ff3b3b;
+}
+
+/* SOCIALS */
+.socials {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.socials a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.socials a:hover {
+  color: #d32f2f;
+}
+</style>
 </head>
 
 <body>
 
+<div class="header">
+  <h1>NIHC PLAYER REGISTRATION</h1>
+</div>
+
 <div class="container">
-
   <div class="card">
-
-    <h1>Player Registration</h1>
 
     <form name="player-registration"
           method="POST"
@@ -35,13 +133,13 @@
 
       <div class="form-grid">
 
-        <input name="first_name" placeholder="FIRST NAME" required>
-        <input name="last_name" placeholder="LAST NAME" required>
+        <input type="text" name="first_name" placeholder="FIRST NAME" required>
+        <input type="text" name="last_name" placeholder="LAST NAME" required>
 
         <input type="date" name="dob">
-        <input name="weight" placeholder="WEIGHT">
+        <input type="text" name="weight" placeholder="WEIGHT">
 
-        <input name="height" placeholder="HEIGHT">
+        <input type="text" name="height" placeholder="HEIGHT">
 
         <select name="hand">
           <option value="">SHOT / CATCH HAND</option>
@@ -49,37 +147,36 @@
           <option>Right</option>
         </select>
 
-        <input name="country" placeholder="COUNTRY">
-        <input name="state" placeholder="STATE / PROVINCE">
+        <input type="text" name="country" placeholder="COUNTRY">
+        <input type="text" name="province" placeholder="STATE / PROVINCE">
 
-        <input name="city" placeholder="CITY / TOWN">
-        <input name="drafted" placeholder="DRAFTED BY">
+        <input type="text" name="city" placeholder="CITY / TOWN">
+        <input type="text" name="drafted_by" placeholder="DRAFTED BY">
 
-        <input name="committed" placeholder="COMMITTED TO" class="full">
+        <input type="text" name="committed_to" placeholder="COMMITTED TO" class="full">
 
-        <textarea name="bio" placeholder="PLAYER BIO" class="full"></textarea>
+        <textarea class="full" name="bio" placeholder="PLAYER BIO"></textarea>
+
+        <div class="full">
+          <label>UPLOAD PLAYER PHOTO (ID)</label><br><br>
+          <input type="file" name="photo" accept="image/*">
+        </div>
 
       </div>
 
-      <!-- PHOTO -->
-      <div style="margin-top: 20px;">
-        <label>UPLOAD PLAYER PHOTO (ID)</label>
-        <input type="file" name="photo">
-      </div>
+      <label style="display:block; margin-top:20px;">
+        <input type="checkbox" required>
+        I agree to the Privacy Policy and Terms
+      </label>
 
-      <!-- TERMS -->
-      <div style="margin-top: 20px;">
-        <label>
-          <input type="checkbox" required>
-          I agree to the Privacy Policy and Terms
-        </label>
-      </div>
-
-      <!-- SUBMIT -->
       <button type="submit">SUBMIT REGISTRATION</button>
 
     </form>
 
+  </div>
+
+  <div class="socials">
+    <a href="https://nihcleague.com" target="_blank">NIHC LEAGUE</a>
   </div>
 
 </div>
