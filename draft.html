@@ -1,145 +1,87 @@
-<!-- =========================
-NIHC FULL AUTOMATED RAFFLE SYSTEM
-(Netlify + Zapier + Google Sheets + Email)
-========================= -->
-
-<!-- =========================
-STEP 1: NETLIFY FORM (ALREADY DONE)
-========================= -->
-<!-- Keep your existing draft.html form -->
-
-
-<!-- =========================
-STEP 2: GOOGLE SHEETS SETUP
-========================= -->
-<!-- Create Sheet Columns EXACTLY like this:
-Name | Email | Entries | Ticket Start | Ticket End | Paid
--->
-
-
-<!-- =========================
-STEP 3: ZAPIER AUTOMATION
-========================= -->
-<!-- Go to zapier.com -->
-
-<!-- TRIGGER -->
-Netlify Forms → New Submission
-
-<!-- ACTION 1 -->
-Google Sheets → Create Row
-Map fields:
-Name → name
-Email → email
-Entries → entries
-
-<!-- ACTION 2 -->
-(Formatter by Zapier)
-Create ticket ranges automatically
-
-Formula logic:
-Ticket Start = previous Ticket End + 1
-Ticket End = Ticket Start + Entries - 1
-
--->
-
-
-<!-- =========================
-STEP 4: AUTO EMAIL
-========================= -->
-<!-- Add another Zap action -->
-Gmail → Send Email
-
-Subject:
-NIHC Draft Entry Confirmed
-
-Body:
-
-Hello {{name}},
-
-Your entry has been received.
-
-Entries: {{entries}}
-Ticket Range: {{ticket_start}} - {{ticket_end}}
-
-Please complete payment to confirm your entry.
-
-Good luck!
-
-NIHC League
-
--->
-
-
-<!-- =========================
-STEP 5: LIVE COUNTER (REAL DATA)
-========================= -->
-
-<!-- Replace fake counter with this -->
-<script>
-fetch('https://opensheet.elk.sh/YOUR_SHEET_ID/Sheet1')
-  .then(res => res.json())
-  .then(data => {
-    let total = 0;
-    data.forEach(row => {
-      total += parseInt(row.Entries || 0);
-    });
-
-    let remaining = 150 - total;
-    document.getElementById("spots").innerText = remaining;
-  });
-</script>
-
-
-<!-- =========================
-STEP 6: WINNER PICKER (AUTO)
-========================= -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>NIHC Winner Picker</title>
+<meta charset="UTF-8">
+<title>NIHC Live Draw</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
-body { font-family: Arial; background:#111; color:#fff; text-align:center; padding:50px; }
-button { padding:15px 30px; font-size:18px; background:#8B0000; color:#fff; border:none; cursor:pointer; }
-.result { margin-top:30px; font-size:24px; }
+body {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  background: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.container {
+  text-align: center;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.ticket {
+  font-size: 5rem;
+  margin: 20px 0;
+  color: #facc15;
+}
+
+button {
+  padding: 15px 30px;
+  font-size: 18px;
+  background: #8B0000;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+button:hover {
+  background: #b30000;
+}
+
+.small {
+  margin-top: 20px;
+  color: #aaa;
+}
 </style>
 </head>
+
 <body>
 
-<h1>NIHC Winner Picker</h1>
-<button onclick="pickWinner()">Draw Winner</button>
-<div class="result" id="result"></div>
+<div class="container">
+
+<h1>NIHC Draft Giveaway</h1>
+
+<div class="ticket" id="ticket">---</div>
+
+<button onclick="draw()">Draw Winner</button>
+
+<p class="small">Live Draw • May 2nd</p>
+
+</div>
 
 <script>
-async function pickWinner(){
-  const res = await fetch('https://opensheet.elk.sh/YOUR_SHEET_ID/Sheet1');
-  const data = await res.json();
+function draw() {
+  const max = 150;
+  let count = 0;
 
-  let tickets = [];
+  const interval = setInterval(() => {
+    const num = Math.floor(Math.random() * max) + 1;
+    document.getElementById("ticket").innerText = "#" + num;
+    count++;
 
-  data.forEach(row => {
-    let start = parseInt(row["Ticket Start"]);
-    let end = parseInt(row["Ticket End"]);
-    for(let i=start;i<=end;i++){
-      tickets.push({ticket:i, name:row.Name});
+    if (count > 25) {
+      clearInterval(interval);
     }
-  });
-
-  let winner = tickets[Math.floor(Math.random()*tickets.length)];
-
-  document.getElementById('result').innerHTML = `🏆 Ticket #${winner.ticket}<br>Winner: ${winner.name}`;
+  }, 80);
 }
 </script>
-
-</body>
-</html>
-
-
-<!-- =========================
-FINAL RESULT
-=========================
-✔ Auto ticket allocation
-✔ Auto email confirmation
-✔ Live ticket counter
-✔ One-click winner draw
-✔ Fully scalable system
-========================= -->
