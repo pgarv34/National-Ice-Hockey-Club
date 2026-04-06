@@ -1,24 +1,102 @@
 <!-- =========================
-NIHC TICKET SYSTEM + WINNER PICKER
+NIHC FULL AUTOMATED RAFFLE SYSTEM
+(Netlify + Zapier + Google Sheets + Email)
 ========================= -->
 
 <!-- =========================
-STEP 1: GOOGLE SHEETS SETUP (MANUAL)
-=========================
-Create a Google Sheet with columns:
-Name | Email | Entries | TicketStart | TicketEnd
-
-Then connect via Zapier OR manual export from Netlify
+STEP 1: NETLIFY FORM (ALREADY DONE)
 ========================= -->
+<!-- Keep your existing draft.html form -->
 
 
 <!-- =========================
-WINNER PICKER TOOL
+STEP 2: GOOGLE SHEETS SETUP
+========================= -->
+<!-- Create Sheet Columns EXACTLY like this:
+Name | Email | Entries | Ticket Start | Ticket End | Paid
+-->
+
+
+<!-- =========================
+STEP 3: ZAPIER AUTOMATION
+========================= -->
+<!-- Go to zapier.com -->
+
+<!-- TRIGGER -->
+Netlify Forms → New Submission
+
+<!-- ACTION 1 -->
+Google Sheets → Create Row
+Map fields:
+Name → name
+Email → email
+Entries → entries
+
+<!-- ACTION 2 -->
+(Formatter by Zapier)
+Create ticket ranges automatically
+
+Formula logic:
+Ticket Start = previous Ticket End + 1
+Ticket End = Ticket Start + Entries - 1
+
+-->
+
+
+<!-- =========================
+STEP 4: AUTO EMAIL
+========================= -->
+<!-- Add another Zap action -->
+Gmail → Send Email
+
+Subject:
+NIHC Draft Entry Confirmed
+
+Body:
+
+Hello {{name}},
+
+Your entry has been received.
+
+Entries: {{entries}}
+Ticket Range: {{ticket_start}} - {{ticket_end}}
+
+Please complete payment to confirm your entry.
+
+Good luck!
+
+NIHC League
+
+-->
+
+
+<!-- =========================
+STEP 5: LIVE COUNTER (REAL DATA)
+========================= -->
+
+<!-- Replace fake counter with this -->
+<script>
+fetch('https://opensheet.elk.sh/YOUR_SHEET_ID/Sheet1')
+  .then(res => res.json())
+  .then(data => {
+    let total = 0;
+    data.forEach(row => {
+      total += parseInt(row.Entries || 0);
+    });
+
+    let remaining = 150 - total;
+    document.getElementById("spots").innerText = remaining;
+  });
+</script>
+
+
+<!-- =========================
+STEP 6: WINNER PICKER (AUTO)
 ========================= -->
 <!DOCTYPE html>
 <html>
 <head>
-<title>Winner Picker</title>
+<title>NIHC Winner Picker</title>
 <style>
 body { font-family: Arial; background:#111; color:#fff; text-align:center; padding:50px; }
 button { padding:15px 30px; font-size:18px; background:#8B0000; color:#fff; border:none; cursor:pointer; }
@@ -28,19 +106,27 @@ button { padding:15px 30px; font-size:18px; background:#8B0000; color:#fff; bord
 <body>
 
 <h1>NIHC Winner Picker</h1>
-<p>Enter total tickets sold:</p>
-
-<input id="max" type="number" placeholder="e.g. 150">
-<br><br>
-<button onclick="pickWinner()">Pick Winner</button>
-
+<button onclick="pickWinner()">Draw Winner</button>
 <div class="result" id="result"></div>
 
 <script>
-function pickWinner(){
-  let max = document.getElementById('max').value;
-  let winner = Math.floor(Math.random() * max) + 1;
-  document.getElementById('result').innerHTML = `🏆 Winning Ticket: #${winner}`;
+async function pickWinner(){
+  const res = await fetch('https://opensheet.elk.sh/YOUR_SHEET_ID/Sheet1');
+  const data = await res.json();
+
+  let tickets = [];
+
+  data.forEach(row => {
+    let start = parseInt(row["Ticket Start"]);
+    let end = parseInt(row["Ticket End"]);
+    for(let i=start;i<=end;i++){
+      tickets.push({ticket:i, name:row.Name});
+    }
+  });
+
+  let winner = tickets[Math.floor(Math.random()*tickets.length)];
+
+  document.getElementById('result').innerHTML = `🏆 Ticket #${winner.ticket}<br>Winner: ${winner.name}`;
 }
 </script>
 
@@ -49,14 +135,11 @@ function pickWinner(){
 
 
 <!-- =========================
-AUTO TICKET NUMBER LOGIC (MANUAL METHOD)
+FINAL RESULT
 =========================
-After payment:
-1. Track entries in Google Sheet
-2. Assign ranges manually:
-Example:
-John = Tickets 1–3
-Sarah = Tickets 4–13
-
-This ensures fair draw
+✔ Auto ticket allocation
+✔ Auto email confirmation
+✔ Live ticket counter
+✔ One-click winner draw
+✔ Fully scalable system
 ========================= -->
