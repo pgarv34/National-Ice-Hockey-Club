@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NIHC Draft Fund Giveaway</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  background: #0b0b0b;
+  color: #fff;
+  text-align: center;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+}
+
+.prize {
+  margin: 20px 0;
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+.card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 25px;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: none;
+  background: #111;
+  color: white;
+}
+
+button {
+  padding: 14px;
+  width: 100%;
+  background: #8B0000;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #b30000;
+}
+
+.payment {
+  margin-top: 25px;
+  text-align: left;
+  background: rgba(255,255,255,0.05);
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.info {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #aaa;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>NIHC Draft Fund Giveaway</h1>
+
+<p class="prize">
+Win a Brand New Pro Stick or Skates 🏒<br>
+£3 Entry • Limited Spots Available
+</p>
+
+<div class="card">
+
+<form name="nihc-raffle" method="POST" data-netlify="true" action="thank-you.html">
+<input type="hidden" name="form-name" value="nihc-raffle">
+
+<input type="text" name="name" placeholder="Full Name" required>
+<input type="email" name="email" placeholder="Email Address" required>
+
+<select name="entries" required>
+  <option value="">Number of Entries</option>
+  <option>1 (£3)</option>
+  <option>2 (£6)</option>
+  <option>5 (£15)</option>
+</select>
+
+<!-- Skill Question (UK legal workaround) -->
+<input type="text" name="question" placeholder="Who won the NHL Stanley Cup in 2024?" required>
+
+<button type="submit">ENTER DRAW</button>
+
+</form>
+
+</div>
+
+<div class="payment">
+<h3>💳 Payment Details</h3>
+
+<p><strong>Account Name:</strong> Altrincham Jets</p>
+<p><strong>Account Number:</strong> 78366068</p>
+<p><strong>Sort Code:</strong> 30-96-26</p>
+
+<p><strong>Reference:</strong> Your Name + RAFFLE</p>
+</div>
+
+<div class="info">
+<p>⚠️ Entry is only confirmed once payment is received.</p>
+<p>🏆 Winner will be announced live on NIHC social channels.</p>
+</div>
+
+</div>
+
+</body>
+</html>
