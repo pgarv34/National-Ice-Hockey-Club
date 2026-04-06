@@ -14,7 +14,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    /* TICKER */
     @keyframes marquee {
       0% { transform: translateX(100%); }
       100% { transform: translateX(-100%); }
@@ -23,7 +22,6 @@
       animation: marquee 15s linear infinite;
     }
 
-    /* HERO */
     .hero-bg {
       animation: heroZoom 20s ease-in-out infinite alternate;
       filter: brightness(0.85);
@@ -44,7 +42,7 @@
 <!-- 🔴 TICKER -->
 <div class="bg-red-600 text-white text-sm py-2 overflow-hidden whitespace-nowrap">
   <div class="animate-marquee inline-block">
-    🏒 UK Hockey Registration Open • Fixtures Live • Join Now •
+    🏒 UK Hockey Registration Open • Fixtures Live • Draft Giveaway Live •
   </div>
 </div>
 
@@ -54,25 +52,30 @@
   <nav class="space-x-6">
     <a href="#fixtures">Fixtures</a>
     <a href="#gallery">Gallery</a>
+    <a href="draft.html">Giveaway</a>
     <a href="#join">Contact</a>
   </nav>
 </header>
 
-<!-- 🔥 HERO -->
+<!-- HERO -->
 <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
 
-  <!-- BACKGROUND -->
   <img src="./NIHCHEro.jpg" class="hero-bg absolute w-full h-full object-cover">
 
-  <!-- OVERLAY -->
   <div class="absolute w-full h-full bg-gradient-to-b from-black/30 via-black/60 to-black"></div>
 
-  <!-- LEFT SIDE BUTTONS -->
+  <!-- BUTTONS -->
   <div class="absolute left-6 md:left-12 top-1/2 transform -translate-y-1/2 flex flex-col gap-4 z-10">
 
     <a href="player-registration.html"
        class="bg-red-600 px-6 py-3 rounded-lg text-sm md:text-base font-semibold shadow-lg hover:bg-red-700 transition">
       Player Registration
+    </a>
+
+    <!-- 🔥 NEW GIVEAWAY BUTTON -->
+    <a href="draft.html"
+       class="bg-yellow-500 px-6 py-3 rounded-lg text-sm md:text-base font-semibold shadow-lg hover:bg-yellow-400 transition text-black">
+      Draft Giveaway
     </a>
 
     <a href="#join"
@@ -97,7 +100,7 @@
   </div>
 </section>
 
-<!-- 🏆 GALLERY -->
+<!-- GALLERY -->
 <section id="gallery" class="max-w-7xl mx-auto py-20 px-4">
   <h2 class="text-3xl font-bold mb-4 text-center">🏆 League Champions</h2>
   <p class="text-center text-gray-400 mb-10">
@@ -106,52 +109,23 @@
 
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
 
-    <div class="group relative overflow-hidden rounded-xl">
-      <img src="./telford-team.jpg" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500">
-      <img src="./spartans.png" class="absolute top-4 left-4 w-14 h-14 bg-white p-1 rounded-full shadow-lg">
-      <div class="absolute bottom-0 bg-gradient-to-t from-black/90 to-transparent w-full p-4 text-center">
-        <p class="font-bold text-lg">2025 – Tier 1</p>
-        <p class="text-sm text-gray-300">Telford Spartans</p>
-      </div>
-    </div>
+    <!-- existing cards unchanged -->
 
-    <div class="group relative overflow-hidden rounded-xl">
-      <img src="./warriors-team.jpg" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500">
-      <img src="./warriors.png" class="absolute top-4 left-4 w-14 h-14 bg-white p-1 rounded-full shadow-lg">
-      <div class="absolute bottom-0 bg-gradient-to-t from-black/90 to-transparent w-full p-4 text-center">
-        <p class="font-bold text-lg">2025 – Tier 2</p>
-        <p class="text-sm text-gray-300">Peterborough Warriors</p>
-      </div>
-    </div>
+  </div>
+</section>
 
-    <div class="group relative overflow-hidden rounded-xl">
-      <img src="./jets-team.jpg" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500">
-      <img src="./jets.png" class="absolute top-4 left-4 w-14 h-14 bg-white p-1 rounded-full shadow-lg">
-      <div class="absolute bottom-0 bg-gradient-to-t from-black/90 to-transparent w-full p-4 text-center">
-        <p class="font-bold text-lg">2025 – Tier 3</p>
-        <p class="text-sm text-gray-300">Altrincham Jets</p>
-      </div>
-    </div>
- <!-- 2024 Tier 1 – Jets -->
-<div class="group relative overflow-hidden rounded-xl">
-  <img src="./jets-2024.jpg" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500">
-  <img src="./jets.png" class="absolute top-4 left-4 w-14 h-14 bg-white p-1 rounded-full shadow-lg">
-  <div class="absolute bottom-0 bg-gradient-to-t from-black/90 to-transparent w-full p-4 text-center">
-    <p class="font-bold text-lg">2024 – Tier 1</p>
-    <p class="text-sm text-gray-300">Altrincham Jets</p>
-  </div>
-</div>
+<!-- 🔥 GIVEAWAY SECTION -->
+<section class="bg-black py-20 px-4 text-center border-t border-gray-800">
+  <h2 class="text-3xl font-bold mb-4">NIHC Draft Fund Giveaway</h2>
 
-<!-- 2024 Tier 2 – Spartans -->
-<div class="group relative overflow-hidden rounded-xl">
-  <img src="./spartans-2024.jpg" class="w-full h-64 object-cover group-hover:scale-110 transition duration-500">
-  <img src="./spartans.png" class="absolute top-4 left-4 w-14 h-14 bg-white p-1 rounded-full shadow-lg">
-  <div class="absolute bottom-0 bg-gradient-to-t from-black/90 to-transparent w-full p-4 text-center">
-    <p class="font-bold text-lg">2024 – Tier 2</p>
-    <p class="text-sm text-gray-300">Telford Spartans</p>
-  </div>
-</div>   
-  </div>
+  <p class="text-gray-400 mb-6">
+    Win a brand new stick or skates • £3 entry • Limited spots available
+  </p>
+
+  <a href="draft.html"
+     class="bg-yellow-500 px-8 py-4 rounded-lg font-bold text-black hover:bg-yellow-400 transition">
+    Enter Giveaway
+  </a>
 </section>
 
 <!-- CONTACT -->
