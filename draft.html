@@ -1,5 +1,5 @@
 <!-- =========================
-NIHC ELITE DRAFT SYSTEM
+NIHC ELITE DRAFT SYSTEM (WITH MOCKUP + COUNTDOWN)
 ========================= -->
 <!DOCTYPE html>
 <html lang="en">
@@ -40,6 +40,27 @@ h1 {
   margin: 20px 0;
   font-size: 1.5rem;
   color: #ff3b3b;
+}
+
+.countdown {
+  font-size: 1.4rem;
+  margin: 15px 0;
+  color: #facc15;
+}
+
+.mockup {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+
+.mockup img {
+  width: 200px;
+  border-radius: 12px;
+  background: #111;
+  padding: 10px;
 }
 
 .card {
@@ -99,11 +120,20 @@ button:hover {
 <h1>NIHC Draft Fund Giveaway</h1>
 
 <p class="prize">
-Win a Custom Maplehawks Jersey + Pro-Level Stick 🏒<br>£3 Entry • Limited to 100 Entries
+Win a Custom Maplehawks Jersey + Pro-Level Stick 🏒<br>
+£3 Entry • Limited to 100 Entries
 </p>
+
+<div class="countdown" id="countdown">Loading countdown...</div>
 
 <div class="counter">
 🔥 Only <span id="spots">100</span> spots remaining
+</div>
+
+<!-- 🔥 MOCKUP SECTION -->
+<div class="mockup">
+  <img src="stick.jpg" alt="Hockey Stick">
+  <img src="jersey.jpg" alt="Maplehawks Jersey">
 </div>
 
 <div class="card">
@@ -142,12 +172,27 @@ Win a Custom Maplehawks Jersey + Pro-Level Stick 🏒<br>£3 Entry • Limited t
 <p>🎟️ Each entry will be assigned a ticket number.</p>
 <p>🏒 Winner selects their preferred stick (flex/curve).</p>
 <p>🏆 Winner announced live on NIHC social channels.</p>
-<
+</div>
 
 </div>
 
 <script>
-// Simple fake scarcity counter (visual only)
+// Countdown to May 2
+const countdown = document.getElementById("countdown");
+const targetDate = new Date("May 2, 2026 18:00:00").getTime();
+
+setInterval(() => {
+  const now = new Date().getTime();
+  const distance = targetDate - now;
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+  countdown.innerHTML = `⏳ Draw in ${days}d ${hours}h ${minutes}m`;
+}, 1000);
+
+// Fake scarcity counter
 let spots = 100;
 setInterval(() => {
   if (spots > 12) {
