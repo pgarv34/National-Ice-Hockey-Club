@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roster Administration — NIHC</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0a0e13">
+<link rel="icon" href="/.netlify/images?url=/logo.png&amp;w=64&amp;h=64&amp;fit=contain">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&amp;family=DM+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="shell masthead__inner">
+    <a class="brand" href="/">
+      <img src="/.netlify/images?url=/logo.png&amp;w=120&amp;h=80&amp;fit=contain" alt="" width="60" height="40">
+      <span class="brand__text">
+        <span class="brand__name">NIHC</span>
+        <span class="brand__sub">Roster administration</span>
+      </span>
+    </a>
+    <nav class="navlinks" aria-label="Primary">
+      <a href="/">Public site</a>
+      <button class="btn btn--ghost" type="button" data-signout hidden>Sign out</button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ===== GATE ===== -->
+  <section class="band" data-gate hidden>
+    <div class="shell" style="max-width:460px;margin-inline:auto">
+      <span class="eyebrow">Restricted</span>
+      <h1 style="font-size:clamp(2rem,5vw,3rem);margin-bottom:1.5rem">Roster<br>administration</h1>
+
+      <form class="formcard" data-login>
+        <p class="muted" style="font-size:.9rem">
+          Player registrations contain personal data about minors. Access is limited to
+          league registrars.
+        </p>
+        <div class="field" data-field="password" style="margin-block:1.5rem">
+          <label for="password">League password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required>
+          <span class="error" data-error-for="password"></span>
+        </div>
+        <button class="btn" type="submit" style="width:100%;justify-content:center">
+          Unlock<span class="arrow" aria-hidden="true">&rarr;</span>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== NOT CONFIGURED ===== -->
+  <section class="band" data-unconfigured hidden>
+    <div class="shell" style="max-width:620px;margin-inline:auto">
+      <span class="eyebrow">Setup required</span>
+      <h1 style="font-size:clamp(2rem,5vw,3rem);margin-bottom:1.5rem">Set an admin<br>password</h1>
+      <div class="formcard">
+        <p>
+          The roster area is locked until an administrator password exists. It is deliberately
+          closed rather than open by default, because registrations include personal data
+          about under-18s.
+        </p>
+        <p class="muted" style="margin-bottom:0">
+          Add an <span class="mono">ADMIN_PASSWORD</span> environment variable to this site in
+          Netlify, then redeploy and reload this page.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ROSTER ===== -->
+  <section class="band band--tight" data-roster hidden>
+    <div class="shell">
+      <div class="sectionhead" style="margin-bottom:1.75rem">
+        <div>
+          <span class="eyebrow">Player registrations</span>
+          <h1 style="font-size:clamp(1.9rem,4vw,2.75rem)">Roster</h1>
+        </div>
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap;justify-content:flex-end">
+          <a class="btn btn--ghost" data-export href="/api/admin/registrations.csv">Export CSV</a>
+        </div>
+      </div>
+
+      <div class="tiles" data-tiles></div>
+
+      <div class="toolbar">
+        <div class="field">
+          <label for="q">Search</label>
+          <input id="q" type="search" placeholder="Name, email, reference or club">
+        </div>
+        <div class="field">
+          <label for="f-status">Status</label>
+          <select id="f-status">
+            <option value="">All</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="waitlisted">Waitlisted</option>
+            <option value="declined">Declined</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-tier">Tier</label>
+          <select id="f-tier">
+            <option value="">All</option>
+            <option>Tier 1</option><option>Tier 2</option>
+            <option>Tier 3</option><option>Development</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-position">Position</label>
+          <select id="f-position">
+            <option value="">All</option>
+            <option>Forward</option><option>Defence</option><option>Goaltender</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="tablewrap">
+        <table class="roster">
+          <thead>
+            <tr>
+              <th scope="col">Reference</th>
+              <th scope="col">Player</th>
+              <th scope="col">Tier</th>
+              <th scope="col">Position</th>
+              <th scope="col">Club</th>
+              <th scope="col">Submitted</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody data-rows></tbody>
+        </table>
+      </div>
+
+      <div class="empty" data-empty hidden>
+        <div class="empty__mark" aria-hidden="true"></div>
+        <p>No registrations match those filters.</p>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:1.25rem">
+        <span class="mono" style="font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--steel-dim)" data-count></span>
+        <div style="display:flex;gap:.5rem">
+          <button class="btn btn--ghost" type="button" data-prev>Previous</button>
+          <button class="btn btn--ghost" type="button" data-next>Next</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== DRAWER ===== -->
+<div class="drawer" data-drawer>
+  <button class="drawer__scrim" type="button" data-drawer-close aria-label="Close panel"></button>
+  <aside class="drawer__panel" role="dialog" aria-modal="true" aria-label="Registration detail">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:1.5rem">
+      <div>
+        <span class="eyebrow" data-drawer-ref>—</span>
+        <h2 style="font-size:1.75rem" data-drawer-name>—</h2>
+      </div>
+      <button class="btn btn--ghost" type="button" data-drawer-close style="padding:.55rem .8rem">Close</button>
+    </div>
+
+    <img data-drawer-photo alt="Player ID photograph" hidden
+         style="width:130px;height:130px;object-fit:cover;border:1px solid var(--line-2);margin-bottom:1.5rem">
+
+    <dl class="deflist" data-drawer-details></dl>
+
+    <div class="field" style="margin-bottom:1rem">
+      <label for="d-status">Status</label>
+      <select id="d-status">
+        <option value="pending">Pending</option>
+        <option value="approved">Approved</option>
+        <option value="waitlisted">Waitlisted</option>
+        <option value="declined">Declined</option>
+      </select>
+    </div>
+
+    <div class="field" style="margin-bottom:1.25rem">
+      <label for="d-note">Registrar note</label>
+      <textarea id="d-note" maxlength="1000" placeholder="Internal only — not shown to the player."></textarea>
+    </div>
+
+    <div data-drawer-status role="status"></div>
+
+    <button class="btn" type="button" data-drawer-save style="width:100%;justify-content:center">Save changes</button>
+  </aside>
+</div>
+
+<script src="/assets/site.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var gate = document.querySelector("[data-gate]");
+  var unconfigured = document.querySelector("[data-unconfigured]");
+  var roster = document.querySelector("[data-roster]");
+  var loginForm = document.querySelector("[data-login]");
+  var signout = document.querySelector("[data-signout]");
+  var rows = document.querySelector("[data-rows]");
+  var tiles = document.querySelector("[data-tiles]");
+  var empty = document.querySelector("[data-empty]");
+  var countLabel = document.querySelector("[data-count]");
+  var exportLink = document.querySelector("[data-export]");
+  var drawer = document.querySelector("[data-drawer]");
+
+  var PAGE = 25;
+  var state = { offset: 0, current: null };
+
+  function el(tag, attrs, children) {
+    var node = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) {
+      if (attrs[k] === null || attrs[k] === undefined) return;
+      if (k === "class") node.className = attrs[k];
+      else if (k === "text") node.textContent = attrs[k];
+      else node.setAttribute(k, attrs[k]);
+    });
+    (children || []).forEach(function (c) { if (c) node.appendChild(c); });
+    return node;
+  }
+
+  function show(section) {
+    [gate, unconfigured, roster].forEach(function (node) { node.hidden = node !== section; });
+    signout.hidden = section !== roster;
+  }
+
+  /* ---------- filters ---------- */
+  function filterParams() {
+    var params = new URLSearchParams();
+    var q = document.getElementById("q").value.trim();
+    var status = document.getElementById("f-status").value;
+    var tier = document.getElementById("f-tier").value;
+    var position = document.getElementById("f-position").value;
+    if (q) params.set("q", q);
+    if (status) params.set("status", status);
+    if (tier) params.set("tier", tier);
+    if (position) params.set("position", position);
+    return params;
+  }
+
+  function ageOf(dob) {
+    if (!dob) return null;
+    var born = new Date(dob + "T00:00:00");
+    if (isNaN(born.getTime())) return null;
+    var now = new Date();
+    var age = now.getFullYear() - born.getFullYear();
+    var m = now.getMonth() - born.getMonth();
+    if (m < 0 || (m === 0 && now.getDate() < born.getDate())) age -= 1;
+    return age;
+  }
+
+  function shortDate(value) {
+    if (!value) return "—";
+    var when = new Date(value);
+    if (isNaN(when.getTime())) return String(value);
+    return when.toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" });
+  }
+
+  /* ---------- rendering ---------- */
+  function renderTiles(summary, matched) {
+    tiles.textContent = "";
+    var byStatus = summary.byStatus || {};
+    var entries = [
+      ["Matching", matched],
+      ["Pending", byStatus.pending || 0],
+      ["Approved", byStatus.approved || 0],
+      ["Waitlisted", byStatus.waitlisted || 0],
+      ["Under 18", summary.underEighteen || 0]
+    ];
+    entries.forEach(function (pair) {
+      tiles.appendChild(
+        el("div", { class: "tile" }, [
+          el("span", { class: "tile__k", text: pair[0] }),
+          el("span", { class: "tile__v tabular", text: String(pair[1]) })
+        ])
+      );
+    });
+  }
+
+  function renderRows(list) {
+    rows.textContent = "";
+    empty.hidden = list.length > 0;
+
+    list.forEach(function (row) {
+      var age = ageOf(row.dateOfBirth);
+      var minor = age !== null && age < 18;
+
+      var nameCell = el("td", {}, [
+        el("div", { class: "name", text: row.firstName + " " + row.lastName }),
+        el("div", { class: "muted", style: "font-size:.78rem" }, [
+          document.createTextNode(row.email),
+          age === null ? null : document.createTextNode(" · " + age),
+          minor ? el("span", { class: "badge badge--minor", text: "U18", style: "margin-left:.5rem" }) : null
+        ])
+      ]);
+
+      var tr = el("tr", { tabindex: "0", role: "button", "aria-label": "Open " + row.reference }, [
+        el("td", { class: "mono", text: row.reference }),
+        nameCell,
+        el("td", { text: row.tier }),
+        el("td", { text: row.position }),
+        el("td", { text: row.currentClub || "Unattached" }),
+        el("td", { class: "muted", text: shortDate(row.createdAt) }),
+        el("td", {}, [el("span", { class: "badge badge--" + row.status, text: row.status })])
+      ]);
+
+      tr.addEventListener("click", function () { openDrawer(row); });
+      tr.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openDrawer(row);
+        }
+      });
+
+      rows.appendChild(tr);
+    });
+  }
+
+  function load() {
+    var params = filterParams();
+    params.set("limit", String(PAGE));
+    params.set("offset", String(state.offset));
+
+    exportLink.href = "/api/admin/registrations.csv?" + filterParams().toString();
+
+    rows.textContent = "";
+    countLabel.textContent = "Loading…";
+
+    fetch("/api/admin/registrations?" + params.toString(), { headers: { accept: "application/json" } })
+      .then(function (response) {
+        if (response.status === 401) { show(gate); return null; }
+        if (response.status === 503) { show(unconfigured); return null; }
+        if (!response.ok) throw new Error("load failed");
+        return response.json();
+      })
+      .then(function (data) {
+        if (!data) return;
+        show(roster);
+        renderTiles(data.summary || {}, data.matched);
+        renderRows(data.registrations || []);
+
+        var from = data.matched === 0 ? 0 : state.offset + 1;
+        var to = Math.min(state.offset + PAGE, data.matched);
+        countLabel.textContent = "Showing " + from + "–" + to + " of " + data.matched;
+
+        document.querySelector("[data-prev]").disabled = state.offset === 0;
+        document.querySelector("[data-next]").disabled = to >= data.matched;
+      })
+      .catch(function () {
+        countLabel.textContent = "Could not load registrations.";
+      });
+  }
+
+  /* ---------- drawer ---------- */
+  var DETAIL_FIELDS = [
+    ["Status", function (r) { return r.status; }],
+    ["Submitted", function (r) { return shortDate(r.createdAt); }],
+    ["Date of birth", function (r) { return r.dateOfBirth; }],
+    ["Age", function (r) { var a = ageOf(r.dateOfBirth); return a === null ? "—" : String(a); }],
+    ["Email", function (r) { return r.email; }],
+    ["Phone", function (r) { return r.phone; }],
+    ["Tier", function (r) { return r.tier; }],
+    ["Position", function (r) { return r.position; }],
+    ["Shoots / catches", function (r) { return r.handedness; }],
+    ["Height", function (r) { return r.heightCm ? r.heightCm + " cm" : null; }],
+    ["Weight", function (r) { return r.weightKg ? r.weightKg + " kg" : null; }],
+    ["Preferred number", function (r) { return r.preferredNumber; }],
+    ["Jersey size", function (r) { return r.jerseySize; }],
+    ["Current club", function (r) { return r.currentClub; }],
+    ["Seasons played", function (r) { return r.seasonsPlayed; }],
+    ["Location", function (r) { return [r.town, r.county].filter(Boolean).join(", "); }],
+    ["Guardian", function (r) { return r.guardianName; }],
+    ["Guardian email", function (r) { return r.guardianEmail; }],
+    ["Guardian phone", function (r) { return r.guardianPhone; }],
+    ["Emergency contact", function (r) { return r.emergencyName; }],
+    ["Emergency number", function (r) { return r.emergencyPhone; }],
+    ["Medical notes", function (r) { return r.medicalNotes; }],
+    ["Photo consent", function (r) { return r.photoConsent ? "Given" : "Not given"; }]
+  ];
+
+  function openDrawer(row) {
+    state.current = row;
+
+    document.querySelector("[data-drawer-ref]").textContent = row.reference;
+    document.querySelector("[data-drawer-name]").textContent = row.firstName + " " + row.lastName;
+    document.getElementById("d-status").value = row.status;
+    document.getElementById("d-note").value = row.reviewNote || "";
+    document.querySelector("[data-drawer-status]").innerHTML = "";
+
+    var photo = document.querySelector("[data-drawer-photo]");
+    if (row.photoKey) {
+      photo.src = "/api/admin/registrations/" + row.id + "/photo";
+      photo.hidden = false;
+    } else {
+      photo.removeAttribute("src");
+      photo.hidden = true;
+    }
+
+    var list = document.querySelector("[data-drawer-details]");
+    list.textContent = "";
+    DETAIL_FIELDS.forEach(function (pair) {
+      var value = pair[1](row);
+      if (value === null || value === undefined || value === "") return;
+      list.appendChild(
+        el("div", {}, [
+          el("dt", { text: pair[0] }),
+          el("dd", { text: String(value) })
+        ])
+      );
+    });
+
+    drawer.setAttribute("data-open", "true");
+    document.getElementById("d-status").focus();
+  }
+
+  function closeDrawer() {
+    drawer.setAttribute("data-open", "false");
+    state.current = null;
+  }
+
+  document.querySelectorAll("[data-drawer-close]").forEach(function (node) {
+    node.addEventListener("click", closeDrawer);
+  });
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && drawer.getAttribute("data-open") === "true") closeDrawer();
+  });
+
+  document.querySelector("[data-drawer-save]").addEventListener("click", function () {
+    if (!state.current) return;
+    var button = this;
+    var slot = document.querySelector("[data-drawer-status]");
+
+    button.disabled = true;
+    button.textContent = "Saving…";
+
+    fetch("/api/admin/registrations/" + state.current.id, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        status: document.getElementById("d-status").value,
+        reviewNote: document.getElementById("d-note").value
+      })
+    })
+      .then(function (response) {
+        if (!response.ok) throw new Error("save failed");
+        return response.json();
+      })
+      .then(function () {
+        slot.innerHTML = '<div class="alert alert--ok">Saved.</div>';
+        load();
+      })
+      .catch(function () {
+        slot.innerHTML = '<div class="alert">That did not save. Try again.</div>';
+      })
+      .finally(function () {
+        button.disabled = false;
+        button.textContent = "Save changes";
+      });
+  });
+
+  /* ---------- auth ---------- */
+  loginForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    var input = document.getElementById("password");
+    var slot = loginForm.querySelector('[data-error-for="password"]');
+    var wrap = loginForm.querySelector('[data-field="password"]');
+    var button = loginForm.querySelector("button");
+
+    slot.textContent = "";
+    wrap.removeAttribute("data-invalid");
+    button.disabled = true;
+    button.textContent = "Checking…";
+
+    fetch("/api/admin/session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password: input.value })
+    })
+      .then(function (response) {
+        if (response.ok) {
+          input.value = "";
+          state.offset = 0;
+          load();
+          return;
+        }
+        if (response.status === 503) { show(unconfigured); return; }
+        wrap.setAttribute("data-invalid", "true");
+        slot.textContent = "That password was not recognised.";
+      })
+      .catch(function () {
+        slot.textContent = "Could not reach the server.";
+      })
+      .finally(function () {
+        button.disabled = false;
+        button.innerHTML = 'Unlock<span class="arrow" aria-hidden="true">→</span>';
+      });
+  });
+
+  signout.addEventListener("click", function () {
+    fetch("/api/admin/session", { method: "DELETE" }).finally(function () {
+      show(gate);
+    });
+  });
+
+  /* ---------- filters + paging ---------- */
+  var debounce;
+  document.getElementById("q").addEventListener("input", function () {
+    clearTimeout(debounce);
+    debounce = setTimeout(function () { state.offset = 0; load(); }, 280);
+  });
+  ["f-status", "f-tier", "f-position"].forEach(function (id) {
+    document.getElementById(id).addEventListener("change", function () {
+      state.offset = 0;
+      load();
+    });
+  });
+  document.querySelector("[data-prev]").addEventListener("click", function () {
+    state.offset = Math.max(0, state.offset - PAGE);
+    load();
+  });
+  document.querySelector("[data-next]").addEventListener("click", function () {
+    state.offset += PAGE;
+    load();
+  });
+
+  /* ---------- boot ---------- */
+  fetch("/api/admin/session", { headers: { accept: "application/json" } })
+    .then(function (response) { return response.json(); })
+    .then(function (data) {
+      if (!data.configured) { show(unconfigured); return; }
+      if (data.authenticated) { load(); return; }
+      show(gate);
+    })
+    .catch(function () { show(gate); });
+})();
+</script>
+
+</body>
+</html>
