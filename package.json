@@ -1,0 +1,19 @@
+{
+  "name": "nihc-league",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "National Ice Hockey Championship — league site, player registration and live match data",
+  "scripts": {
+    "db:generate": "drizzle-kit generate"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^11.0.1",
+    "@netlify/database": "^2.0.0",
+    "drizzle-orm": "^1.0.0-beta.22"
+  },
+  "devDependencies": {
+    "@netlify/functions": "^6.0.0",
+    "drizzle-kit": "^1.0.0-beta.22"
+  }
+}

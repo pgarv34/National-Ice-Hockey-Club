@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fixtures, Scores &amp; Standings — NIHC</title>
+<meta name="description" content="Live scores, the full championship schedule and league standings for every NIHC tier, served from the league stats engine.">
+<meta name="theme-color" content="#0a0e13">
+<link rel="icon" href="/.netlify/images?url=/logo.png&amp;w=64&amp;h=64&amp;fit=contain">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&amp;family=DM+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<a class="skiplink" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <div class="shell masthead__inner">
+    <a class="brand" href="/">
+      <img src="/.netlify/images?url=/logo.png&amp;w=120&amp;h=80&amp;fit=contain" alt="" width="60" height="40">
+      <span class="brand__text">
+        <span class="brand__name">NIHC</span>
+        <span class="brand__sub">National Ice Hockey Championship</span>
+      </span>
+    </a>
+    <button class="navtoggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu"><span></span></button>
+    <nav class="navlinks" id="nav" aria-label="Primary">
+      <a href="/">League</a>
+      <a href="/teams">Teams</a>
+      <a href="/fixtures" aria-current="page">Fixtures</a>
+      <a href="/#champions">Honours</a>
+      <a href="/#contact">Contact</a>
+      <a class="btn" href="/register">Register<span class="arrow" aria-hidden="true">&rarr;</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="pagehead">
+    <div class="shell">
+      <span class="eyebrow">Live match data</span>
+      <h1 style="font-size:clamp(2.5rem,7vw,5rem)">Fixtures<br>&amp; tables</h1>
+      <p class="lede" style="margin-top:1.5rem">
+        Everything on this page is generated from GameSheet, the championship's stats engine.
+        Scorekeepers file each goal, penalty and period rinkside — this page reads the same record.
+      </p>
+    </div>
+  </section>
+
+  <!-- Native scorecards from the normalising proxy -->
+  <section class="band band--tight">
+    <div class="shell">
+      <div class="sectionhead" style="margin-bottom:1.75rem">
+        <div>
+          <span class="eyebrow">Latest</span>
+          <h2 style="font-size:clamp(1.8rem,3.4vw,2.5rem)">Scores &amp; next up</h2>
+        </div>
+        <p class="muted" style="font-size:.9rem">
+          <span data-scoreboard-stamp>Reading the stats engine…</span>
+        </p>
+      </div>
+
+      <div class="scoreboard" data-scoreboard data-limit="9" aria-live="polite" aria-label="Latest scores and upcoming fixtures"></div>
+
+      <div data-scoreboard-fallback hidden>
+        <div class="formnote" style="margin-bottom:0">
+          <span aria-hidden="true" class="mono">i</span>
+          <span data-fallback-note>
+            Native scorecards are unavailable right now — the full GameSheet views below are live.
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Full GameSheet views -->
+  <section class="band band--tight" data-embed-tabs>
+    <div class="shell">
+      <div class="faceoff" style="margin-bottom:clamp(2.5rem,5vw,4rem)"><span></span></div>
+
+      <div class="sectionhead" style="margin-bottom:1.75rem">
+        <div>
+          <span class="eyebrow">Full season</span>
+          <h2 style="font-size:clamp(1.8rem,3.4vw,2.5rem)">Schedule, tables<br>and results</h2>
+        </div>
+        <p class="muted" style="font-size:.9rem">
+          Filter by division and team inside the panel. Deep links open the full GameSheet record
+          for a game, including scoresheets and penalties.
+        </p>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Season views"></div>
+
+      <div class="embed">
+        <div class="embed__note">
+          <span>Source — GameSheet stats engine</span>
+          <span>Season <span class="tabular">11696</span></span>
+        </div>
+        <iframe title="GameSheet season views" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="min-height:900px"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta band band--tight">
+    <div class="shell cta__grid">
+      <div>
+        <span class="eyebrow">Not on a roster yet?</span>
+        <h2 style="font-size:clamp(1.8rem,3.6vw,2.75rem)">Register and get<br>placed with a club</h2>
+      </div>
+      <div>
+        <a class="btn" href="/register">Start registration<span class="arrow" aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="shell">
+    <div class="foot__grid">
+      <div>
+        <a class="brand" href="/" style="margin-bottom:1.25rem">
+          <img src="/.netlify/images?url=/logo.png&amp;w=120&amp;h=80&amp;fit=contain" alt="" width="60" height="40">
+          <span class="brand__text">
+            <span class="brand__name">NIHC</span>
+            <span class="brand__sub">National Ice Hockey Championship</span>
+          </span>
+        </a>
+        <p class="muted" style="font-size:.9rem;max-width:34ch">
+          Tiered league hockey across the United Kingdom. Live match data provided by GameSheet.
+        </p>
+      </div>
+      <div>
+        <h4>League</h4>
+        <ul>
+          <li><a href="/teams">Member clubs</a></li>
+          <li><a href="/fixtures">Fixtures &amp; tables</a></li>
+          <li><a href="/#champions">Honours board</a></li>
+          <li><a href="/register">Player registration</a></li>
+          <li><a href="/#contact">Contact the office</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Governance</h4>
+        <ul>
+          <li><a href="/safeguarding">Safeguarding policy</a></li>
+          <li><a href="/privacy">Privacy policy</a></li>
+          <li><a href="/admin">Roster administration</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__base">
+      <span>&copy; <span data-year>2026</span> National Ice Hockey Championship</span>
+      <span>Stats engine — GameSheet</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/league-config.js"></script>
+<script src="/assets/site.js"></script>
+</body>
+</html>

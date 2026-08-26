@@ -1,0 +1,95 @@
+[build]
+  publish = "."
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# ---------------------------------------------------------------
+# Club profiles. The pages are flat files; these rewrites give them
+# the /teams/<club> URLs used in links and share cards. Adding a club
+# means adding its page, a card on /teams and a rule here.
+# ---------------------------------------------------------------
+[[redirects]]
+  from = "/teams/altrincham-jets"
+  to = "/team-altrincham-jets.html"
+  status = 200
+
+[[redirects]]
+  from = "/teams/manchester-maplehawks"
+  to = "/team-manchester-maplehawks.html"
+  status = 200
+
+# ---------------------------------------------------------------
+# Superseded URLs. The Draft Fund Giveaway has been retired and the
+# registration page moved to /register.
+# ---------------------------------------------------------------
+[[redirects]]
+  from = "/player-registration.html"
+  to = "/register"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/player-registration"
+  to = "/register"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/draft.html"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/draft"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/thank-you.html"
+  to = "/register"
+  status = 301
+  force = true
+
+# ---------------------------------------------------------------
+# Headers
+# ---------------------------------------------------------------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+    Cross-Origin-Opener-Policy = "same-origin"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+[[headers]]
+  for = "/*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# The roster area holds personal data about minors — keep it out of indexes.
+[[headers]]
+  for = "/admin"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-store"
+
+[[headers]]
+  for = "/admin.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    Cache-Control = "no-store"

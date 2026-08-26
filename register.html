@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Player Registration — NIHC</title>
+<meta name="description" content="Register to play in the National Ice Hockey Championship. Takes about five minutes; under-18s need a parent or guardian on the record.">
+<meta name="theme-color" content="#0a0e13">
+<link rel="icon" href="/.netlify/images?url=/logo.png&amp;w=64&amp;h=64&amp;fit=contain">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&amp;family=DM+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+
+<a class="skiplink" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <div class="shell masthead__inner">
+    <a class="brand" href="/">
+      <img src="/.netlify/images?url=/logo.png&amp;w=120&amp;h=80&amp;fit=contain" alt="" width="60" height="40">
+      <span class="brand__text">
+        <span class="brand__name">NIHC</span>
+        <span class="brand__sub">National Ice Hockey Championship</span>
+      </span>
+    </a>
+    <button class="navtoggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Menu"><span></span></button>
+    <nav class="navlinks" id="nav" aria-label="Primary">
+      <a href="/">League</a>
+      <a href="/teams">Teams</a>
+      <a href="/fixtures">Fixtures</a>
+      <a href="/#champions">Honours</a>
+      <a href="/#contact">Contact</a>
+      <a class="btn" href="/register" aria-current="page">Register</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="pagehead">
+    <div class="shell">
+      <span class="eyebrow">Player registration &middot; <span data-season-label>2026 / 27 Season</span></span>
+      <h1 style="font-size:clamp(2.5rem,7vw,5rem)">Register<br>to play</h1>
+      <p class="lede" style="margin-top:1.5rem">
+        One form per player. We use it to place you with a club at the right level, to cover
+        you under league insurance, and to hold an emergency contact for matchdays.
+      </p>
+    </div>
+  </section>
+
+  <section class="band band--tight">
+    <div class="shell" style="max-width:920px;margin-inline:auto">
+
+      <!-- ===== SUCCESS ===== -->
+      <div class="formcard receipt" data-receipt hidden>
+        <span class="eyebrow" style="justify-content:center">Registration received</span>
+        <h2 style="font-size:clamp(1.9rem,4vw,2.75rem)">You're on the list</h2>
+        <p class="muted">Quote this reference in any correspondence with the league office.</p>
+        <div class="receipt__ref tabular" data-receipt-ref>NIHC-000000</div>
+        <p class="muted" style="max-width:48ch;margin-inline:auto">
+          A registrar reviews new entries twice a week and confirms your club placement by email.
+          Nothing is charged at this stage.
+        </p>
+        <div style="display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap;margin-top:2rem">
+          <a class="btn btn--ghost" href="/fixtures">See the fixtures</a>
+          <a class="btn" href="/">Back to the league</a>
+        </div>
+      </div>
+
+      <!-- ===== FORM ===== -->
+      <form class="formcard" data-registration novalidate enctype="multipart/form-data" method="POST" action="/api/registrations">
+
+        <div class="formnote">
+          <span class="mono" aria-hidden="true">*</span>
+          <span>
+            Fields marked with an asterisk are required. If the player is under 18, a parent or
+            guardian section appears once you enter the date of birth.
+          </span>
+        </div>
+
+
+        <!-- Shown only when arriving from a club page (/register?club=<slug>) -->
+        <div class="formnote" data-club-banner hidden>
+          <span class="mono" aria-hidden="true">&rarr;</span>
+          <span>
+            Registering via <strong data-club-name>your club</strong>. We have filled the club
+            field in for you further down — change it if that is not right.
+          </span>
+        </div>
+
+        <div data-form-status role="alert"></div>
+
+        <p class="vh"><label>Do not fill this in <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+
+        <!-- 01 PLAYER -->
+        <fieldset class="fieldset">
+          <div class="fieldset__head">
+            <span class="fieldset__no">01</span>
+            <legend class="fieldset__title">The player</legend>
+          </div>
+
+          <div class="grid-2">
+            <div class="field" data-field="firstName">
+              <label for="firstName">First name <span class="req">*</span></label>
+              <input id="firstName" name="firstName" type="text" required maxlength="80" autocomplete="given-name">
+              <span class="error" data-error-for="firstName"></span>
+            </div>
+
+            <div class="field" data-field="lastName">
+              <label for="lastName">Last name <span class="req">*</span></label>
+              <input id="lastName" name="lastName" type="text" required maxlength="80" autocomplete="family-name">
+              <span class="error" data-error-for="lastName"></span>
+            </div>
+
+            <div class="field" data-field="dateOfBirth">
+              <label for="dateOfBirth">Date of birth <span class="req">*</span></label>
+              <input id="dateOfBirth" name="dateOfBirth" type="date" required min="1946-01-01">
+              <span class="hint" data-age-readout>Used for age banding and safeguarding.</span>
+              <span class="error" data-error-for="dateOfBirth"></span>
+            </div>
+
+            <div class="field" data-field="email">
+              <label for="email">Email <span class="req">*</span></label>
+              <input id="email" name="email" type="email" required maxlength="160" autocomplete="email">
+              <span class="error" data-error-for="email"></span>
+            </div>
+
+            <div class="field" data-field="phone">
+              <label for="phone">Mobile</label>
+              <input id="phone" name="phone" type="tel" maxlength="40" autocomplete="tel">
+              <span class="error" data-error-for="phone"></span>
+            </div>
+
+            <div class="field" data-field="town">
+              <label for="town">Town or city</label>
+              <input id="town" name="town" type="text" maxlength="80" autocomplete="address-level2">
+            </div>
+
+            <div class="field" data-field="county">
+              <label for="county">County</label>
+              <input id="county" name="county" type="text" maxlength="80" autocomplete="address-level1">
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- 02 ON ICE -->
+        <fieldset class="fieldset">
+          <div class="fieldset__head">
+            <span class="fieldset__no">02</span>
+            <legend class="fieldset__title">On the ice</legend>
+          </div>
+
+          <div class="grid-3">
+            <div class="field" data-field="position">
+              <label for="position">Position <span class="req">*</span></label>
+              <select id="position" name="position" required>
+                <option value="">Choose…</option>
+                <option>Forward</option>
+                <option>Defence</option>
+                <option>Goaltender</option>
+              </select>
+              <span class="error" data-error-for="position"></span>
+            </div>
+
+            <div class="field" data-field="handedness">
+              <label for="handedness">Shoots / catches</label>
+              <select id="handedness" name="handedness">
+                <option value="">Not stated</option>
+                <option>Left</option>
+                <option>Right</option>
+              </select>
+            </div>
+
+            <div class="field" data-field="preferredNumber">
+              <label for="preferredNumber">Preferred number</label>
+              <input id="preferredNumber" name="preferredNumber" type="number" min="1" max="99" inputmode="numeric">
+              <span class="error" data-error-for="preferredNumber"></span>
+            </div>
+
+            <div class="field" data-field="heightCm">
+              <label for="heightCm">Height (cm)</label>
+              <input id="heightCm" name="heightCm" type="number" min="90" max="230" inputmode="numeric">
+            </div>
+
+            <div class="field" data-field="weightKg">
+              <label for="weightKg">Weight (kg)</label>
+              <input id="weightKg" name="weightKg" type="number" min="20" max="200" inputmode="numeric">
+            </div>
+
+            <div class="field" data-field="jerseySize">
+              <label for="jerseySize">Jersey size</label>
+              <select id="jerseySize" name="jerseySize">
+                <option value="">Choose…</option>
+                <option>YM</option><option>YL</option>
+                <option>S</option><option>M</option><option>L</option>
+                <option>XL</option><option>XXL</option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- 03 PLACEMENT -->
+        <fieldset class="fieldset">
+          <div class="fieldset__head">
+            <span class="fieldset__no">03</span>
+            <legend class="fieldset__title">Placement</legend>
+          </div>
+
+          <div class="grid-3">
+            <div class="field" data-field="tier">
+              <label for="tier">Registering for <span class="req">*</span></label>
+              <select id="tier" name="tier" required>
+                <option value="">Choose…</option>
+                <option>Tier 1</option>
+                <option>Tier 2</option>
+                <option>Tier 3</option>
+                <option>Development</option>
+              </select>
+              <span class="hint">Registrars may move you a tier either way after assessment.</span>
+              <span class="error" data-error-for="tier"></span>
+            </div>
+
+            <div class="field" data-field="currentClub">
+              <label for="currentClub">Current or last club</label>
+              <input id="currentClub" name="currentClub" type="text" maxlength="120" placeholder="Unattached">
+            </div>
+
+            <div class="field" data-field="seasonsPlayed">
+              <label for="seasonsPlayed">Seasons played</label>
+              <input id="seasonsPlayed" name="seasonsPlayed" type="number" min="0" max="60" inputmode="numeric">
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- 04 GUARDIAN -->
+        <div class="reveal-block" data-guardian-block aria-hidden="true">
+          <div>
+            <fieldset class="fieldset">
+              <div class="fieldset__head">
+                <span class="fieldset__no">04</span>
+                <legend class="fieldset__title">Parent or guardian</legend>
+              </div>
+
+              <div class="formnote">
+                <span class="mono" aria-hidden="true">i</span>
+                <span>The player is under 18, so the league needs a responsible adult on the record.</span>
+              </div>
+
+              <div class="grid-3">
+                <div class="field" data-field="guardianName">
+                  <label for="guardianName">Guardian name <span class="req">*</span></label>
+                  <input id="guardianName" name="guardianName" type="text" maxlength="120">
+                  <span class="error" data-error-for="guardianName"></span>
+                </div>
+                <div class="field" data-field="guardianEmail">
+                  <label for="guardianEmail">Guardian email <span class="req">*</span></label>
+                  <input id="guardianEmail" name="guardianEmail" type="email" maxlength="160">
+                  <span class="error" data-error-for="guardianEmail"></span>
+                </div>
+                <div class="field" data-field="guardianPhone">
+                  <label for="guardianPhone">Guardian mobile</label>
+                  <input id="guardianPhone" name="guardianPhone" type="tel" maxlength="40">
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+
+        <!-- 05 SAFETY -->
+        <fieldset class="fieldset">
+          <div class="fieldset__head">
+            <span class="fieldset__no" data-safety-no>04</span>
+            <legend class="fieldset__title">Matchday safety</legend>
+          </div>
+
+          <div class="grid-2">
+            <div class="field" data-field="emergencyName">
+              <label for="emergencyName">Emergency contact</label>
+              <input id="emergencyName" name="emergencyName" type="text" maxlength="120">
+            </div>
+            <div class="field" data-field="emergencyPhone">
+              <label for="emergencyPhone">Emergency number</label>
+              <input id="emergencyPhone" name="emergencyPhone" type="tel" maxlength="40">
+            </div>
+            <div class="field span-2" data-field="medicalNotes">
+              <label for="medicalNotes">Medical notes for first-aiders</label>
+              <textarea id="medicalNotes" name="medicalNotes" maxlength="2000" placeholder="Asthma, allergies, previous concussion, medication — anything a first-aider should know."></textarea>
+              <span class="hint">Seen only by league registrars and matchday first-aiders.</span>
+            </div>
+            <div class="field span-2" data-field="photo">
+              <span class="field__label">Player ID photo</span>
+              <input id="photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp">
+              <span class="hint">Optional. Head and shoulders, JPEG, PNG or WebP, up to 5&nbsp;MB. Used on team sheets only.</span>
+              <span class="error" data-error-for="photo"></span>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- 06 CONSENTS -->
+        <fieldset class="fieldset">
+          <div class="fieldset__head">
+            <span class="fieldset__no" data-consent-no>05</span>
+            <legend class="fieldset__title">Consent</legend>
+          </div>
+
+          <div data-field="safeguardingAck">
+            <label class="check">
+              <input type="checkbox" name="safeguardingAck" value="true">
+              <span>I have read the <a href="/safeguarding">safeguarding policy</a> and accept the league's code of conduct. <span class="req">*</span></span>
+            </label>
+            <span class="error" data-error-for="safeguardingAck"></span>
+          </div>
+
+          <div data-field="termsAck">
+            <label class="check">
+              <input type="checkbox" name="termsAck" value="true">
+              <span>I accept the <a href="/privacy">privacy policy</a> and agree the league may hold these details for the season. <span class="req">*</span></span>
+            </label>
+            <span class="error" data-error-for="termsAck"></span>
+          </div>
+
+          <div data-field="photoConsent">
+            <label class="check">
+              <input type="checkbox" name="photoConsent" value="true">
+              <span>I consent to photography and video at league fixtures being used in NIHC match reports and social channels.</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <button class="btn" type="submit" data-submit style="width:100%;justify-content:center">
+          Submit registration<span class="arrow" aria-hidden="true">&rarr;</span>
+        </button>
+      </form>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="shell">
+    <div class="foot__base" style="border-top:0;padding-top:0">
+      <span>&copy; <span data-year>2026</span> National Ice Hockey Championship</span>
+      <span><a href="/privacy">Privacy</a> &nbsp;·&nbsp; <a href="/safeguarding">Safeguarding</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/league-config.js"></script>
+<script src="/assets/site.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var form = document.querySelector("[data-registration]");
+  if (!form) return;
+
+  var status = form.querySelector("[data-form-status]");
+  var submit = form.querySelector("[data-submit]");
+  var receipt = document.querySelector("[data-receipt]");
+  var dob = form.querySelector("#dateOfBirth");
+  var guardianBlock = form.querySelector("[data-guardian-block]");
+  var ageReadout = form.querySelector("[data-age-readout]");
+  var guardianRequired = ["guardianName", "guardianEmail"];
+
+  /* ---------- age handling ---------- */
+  function ageFrom(value) {
+    if (!value) return null;
+    var born = new Date(value + "T00:00:00");
+    if (isNaN(born.getTime())) return null;
+    var now = new Date();
+    var age = now.getFullYear() - born.getFullYear();
+    var months = now.getMonth() - born.getMonth();
+    if (months < 0 || (months === 0 && now.getDate() < born.getDate())) age -= 1;
+    return age;
+  }
+
+  function renumber(minor) {
+    form.querySelector("[data-safety-no]").textContent = minor ? "05" : "04";
+    form.querySelector("[data-consent-no]").textContent = minor ? "06" : "05";
+  }
+
+  function syncAge() {
+    var age = ageFrom(dob.value);
+    var minor = age !== null && age < 18;
+
+    guardianBlock.setAttribute("data-open", String(minor));
+    guardianBlock.setAttribute("aria-hidden", String(!minor));
+    renumber(minor);
+
+    guardianRequired.forEach(function (name) {
+      var input = form.elements[name];
+      if (!input) return;
+      if (minor) input.setAttribute("required", "required");
+      else input.removeAttribute("required");
+    });
+
+    if (age === null) {
+      ageReadout.textContent = "Used for age banding and safeguarding.";
+    } else if (age < 4) {
+      ageReadout.textContent = "Players must be at least 4 years old.";
+    } else {
+      ageReadout.textContent = "Age " + age + (minor ? " — guardian details required." : " — senior registration.");
+    }
+  }
+
+  dob.addEventListener("change", syncAge);
+  dob.addEventListener("input", syncAge);
+  syncAge();
+
+  /* ---------- error plumbing ---------- */
+  function clearErrors() {
+    status.innerHTML = "";
+    form.querySelectorAll("[data-field]").forEach(function (node) {
+      node.removeAttribute("data-invalid");
+    });
+    form.querySelectorAll("[data-error-for]").forEach(function (node) {
+      node.textContent = "";
+    });
+  }
+
+  function showErrors(fields) {
+    var firstNode = null;
+    Object.keys(fields).forEach(function (name) {
+      var slot = form.querySelector('[data-error-for="' + name + '"]');
+      var wrap = form.querySelector('[data-field="' + name + '"]');
+      if (slot) slot.textContent = fields[name];
+      if (wrap) {
+        wrap.setAttribute("data-invalid", "true");
+        if (!firstNode) firstNode = wrap;
+      }
+    });
+    if (firstNode) firstNode.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  /* Client-side pass so obvious gaps never need a round trip. */
+  function localErrors() {
+    var errors = {};
+    var required = {
+      firstName: "Enter the player's first name.",
+      lastName: "Enter the player's last name.",
+      dateOfBirth: "Enter a date of birth.",
+      email: "Enter an email address.",
+      position: "Choose a position.",
+      tier: "Choose the tier you are registering for."
+    };
+
+    Object.keys(required).forEach(function (name) {
+      var field = form.elements[name];
+      if (field && !String(field.value).trim()) errors[name] = required[name];
+    });
+
+    var email = form.elements.email;
+    if (email.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())) {
+      errors.email = "That email address does not look right.";
+    }
+
+    if (guardianBlock.getAttribute("data-open") === "true") {
+      if (!form.elements.guardianName.value.trim()) {
+        errors.guardianName = "A parent or guardian name is required for under-18s.";
+      }
+      if (!form.elements.guardianEmail.value.trim()) {
+        errors.guardianEmail = "A parent or guardian email is required for under-18s.";
+      }
+    }
+
+    if (!form.elements.safeguardingAck.checked) {
+      errors.safeguardingAck = "Please confirm you have read the safeguarding policy.";
+    }
+    if (!form.elements.termsAck.checked) {
+      errors.termsAck = "Please accept the terms and privacy policy.";
+    }
+
+    var photo = form.elements.photo;
+    if (photo.files && photo.files[0] && photo.files[0].size > 5 * 1024 * 1024) {
+      errors.photo = "That image is larger than 5 MB.";
+    }
+
+    return errors;
+  }
+
+  function setBusy(busy) {
+    submit.disabled = busy;
+    submit.innerHTML = busy
+      ? "Submitting…"
+      : 'Submit registration<span class="arrow" aria-hidden="true">→</span>';
+  }
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    clearErrors();
+
+    var local = localErrors();
+    if (Object.keys(local).length) {
+      status.innerHTML = '<div class="alert">Some details need another look before we can submit this.</div>';
+      showErrors(local);
+      return;
+    }
+
+    setBusy(true);
+
+    fetch("/api/registrations", { method: "POST", body: new FormData(form) })
+      .then(function (response) {
+        return response.json().then(function (body) {
+          return { ok: response.ok, status: response.status, body: body };
+        });
+      })
+      .then(function (result) {
+        if (result.ok) {
+          document.querySelector("[data-receipt-ref]").textContent = result.body.reference;
+          form.hidden = true;
+          receipt.hidden = false;
+          receipt.scrollIntoView({ behavior: "smooth", block: "start" });
+          return;
+        }
+
+        if (result.status === 422 && result.body.fields) {
+          status.innerHTML = '<div class="alert">Some details need another look before we can submit this.</div>';
+          showErrors(result.body.fields);
+          return;
+        }
+
+        status.innerHTML =
+          '<div class="alert">' +
+          (result.body.message || "We could not save that registration. Please try again.") +
+          "</div>";
+      })
+      .catch(function () {
+        status.innerHTML =
+          '<div class="alert">That did not reach the league office — check your connection and try again.</div>';
+      })
+      .finally(function () {
+        setBusy(false);
+      });
+  });
+})();
+</script>
+
+</body>
+</html>
