@@ -11,7 +11,7 @@ import { getStore } from "@netlify/blobs";
  * plainly and the pages fall back to the embed. It never fails the page.
  */
 
-const SEASON_ID = () => process.env.GAMESHEET_SEASON_ID ?? "11696";
+const SEASON_ID = () => process.env.GAMESHEET_SEASON_ID ?? "15760";
 const API_BASE = () =>
   (process.env.GAMESHEET_API_BASE ?? "https://gamesheetstats.com/api").replace(/\/$/, "");
 const CACHE_KEY = () => `season-${SEASON_ID()}.json`;
