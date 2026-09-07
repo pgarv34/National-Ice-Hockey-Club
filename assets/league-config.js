@@ -4,17 +4,17 @@
    ------------------------------------------------------------------ */
 window.NIHC_CONFIG = {
   // GameSheet season powering fixtures, scores and standings.
-  seasonId: "11696",
+  seasonId: "15760",
   gamesheetBase: "https://gamesheetstats.com",
 
-  // Passed through to the GameSheet embed so it matches this site's palette.
-  embedColours: { primary: "E9EFF5", secondary: "0F151D" },
+  // GameSheet embed configuration id. The palette and layout are set against
+  // this id in the GameSheet dashboard, so the site passes no styling params.
+  embedConfiguration: "464",
 
-  // Embedded GameSheet views, in tab order.
+  // Embedded GameSheet views, in tab order. Tabs only appear once there is
+  // more than one view to switch between.
   views: [
-    { id: "schedule", label: "Schedule", path: "schedule" },
-    { id: "standings", label: "Standings", path: "standings" },
-    { id: "scores", label: "Scores", path: "scores" },
+    { id: "games", label: "Games", path: "games" },
   ],
 
   // Server-side normalising proxy over the same season.
