@@ -83,14 +83,12 @@
 
   /* ---------- GameSheet embeds ---------- */
   function embedUrl(path) {
-    var colours = CONFIG.embedColours || {};
-    var query =
-      "configuration[primary-colour]=" + encodeURIComponent(colours.primary || "FFFFFF") +
-      "&configuration[secondary-colour]=" + encodeURIComponent(colours.secondary || "1A2841");
+    var configuration = CONFIG.embedConfiguration;
     return (
       (CONFIG.gamesheetBase || "https://gamesheetstats.com") +
       "/seasons/" + encodeURIComponent(CONFIG.seasonId) +
-      "/" + path + "?" + query
+      "/" + path +
+      (configuration ? "?configuration=" + encodeURIComponent(configuration) : "")
     );
   }
 
@@ -109,7 +107,14 @@
     var tabs = host.querySelector(".tabs");
     var frame = host.querySelector("iframe");
     var views = CONFIG.views || [];
-    if (!tabs || !frame || !views.length) return;
+    if (!frame || !views.length) return;
+
+    /* A single view needs no tablist, so the pages omit it. */
+    if (!tabs || views.length < 2) {
+      mountEmbed(frame, views[0].path, "GameSheet " + views[0].label);
+      if (tabs) tabs.hidden = true;
+      return;
+    }
 
     views.forEach(function (view, index) {
       var button = el("button", {
